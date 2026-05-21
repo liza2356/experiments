@@ -328,136 +328,168 @@
       text-align: center;
     }
 
-    /* ── CALENDAR TAB ── */
-    .calendar-view { padding: 10px; }
+    /* ── DAY VIEW TAB ── */
+    .dayview { display: flex; flex-direction: column; height: calc(100vh - 160px); }
 
-    .cal-legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px 12px;
-      margin-bottom: 12px;
-      padding: 10px 12px;
-      background: white;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-    }
-
-    .legend-item {
+    .dv-nav {
       display: flex;
       align-items: center;
-      gap: 5px;
-      font-size: 0.68rem;
-      color: var(--text-muted);
-      font-weight: 600;
-    }
-
-    .legend-dot {
-      width: 11px;
-      height: 11px;
-      border-radius: 3px;
+      justify-content: space-between;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      padding: 10px 12px;
       flex-shrink: 0;
     }
 
-    .cal-day {
-      background: white;
-      border-radius: 8px;
-      margin-bottom: 7px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-    }
-
-    .cal-day-header {
-      background: var(--navy);
-      color: white;
-      padding: 7px 11px;
+    .dv-nav-btn {
+      background: var(--gray-light);
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      font-size: 1.1rem;
+      cursor: pointer;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: center;
+      color: var(--navy);
+      -webkit-tap-highlight-color: transparent;
+      flex-shrink: 0;
     }
 
-    .cal-day-num {
+    .dv-nav-btn:disabled { opacity: 0.25; cursor: default; }
+
+    .dv-nav-center { text-align: center; flex: 1; padding: 0 8px; }
+
+    .dv-nav-day {
       font-size: 0.65rem;
-      color: rgba(255,255,255,0.5);
-      font-weight: 600;
-      margin-bottom: 1px;
+      font-weight: 700;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
     }
 
-    .cal-day-label {
-      font-size: 0.75rem;
+    .dv-nav-date {
+      font-size: 0.9rem;
       font-weight: 800;
+      color: var(--navy);
       line-height: 1.2;
     }
 
-    .cal-day-loc {
-      font-size: 0.62rem;
-      color: rgba(255,255,255,0.6);
-      text-align: right;
-      max-width: 45%;
-      line-height: 1.3;
-    }
-
-    .cal-bars {
-      padding: 8px 10px 2px;
-    }
-
-    .cal-row {
-      margin-bottom: 6px;
-    }
-
-    .cal-row-label {
-      font-size: 0.6rem;
+    .dv-nav-loc {
+      font-size: 0.68rem;
       color: var(--text-muted);
-      font-weight: 600;
-      margin-bottom: 2px;
+      margin-top: 1px;
     }
 
-    .cal-bar-track {
+    .dv-scroll {
+      overflow-y: auto;
+      flex: 1;
+      background: white;
+    }
+
+    .dv-grid-wrap {
+      display: flex;
       position: relative;
-      height: 28px;
-      background: var(--gray-light);
-      border-radius: 5px;
-      overflow: hidden;
+      padding: 0;
     }
 
-    .cal-block {
+    .dv-hours {
+      width: 46px;
+      flex-shrink: 0;
+      border-right: 1px solid var(--border);
+    }
+
+    .dv-hour-label {
+      height: 56px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-end;
+      padding: 3px 8px 0 0;
+      font-size: 0.6rem;
+      color: #9ca3af;
+      font-weight: 600;
+      box-sizing: border-box;
+    }
+
+    .dv-col {
+      flex: 1;
+      position: relative;
+    }
+
+    .dv-hour-row {
+      height: 56px;
+      border-bottom: 1px solid #f0f0f0;
+      box-sizing: border-box;
+    }
+
+    .dv-hour-row:nth-child(odd) { background: #fafafa; }
+
+    .dv-events {
       position: absolute;
-      top: 0;
-      height: 100%;
-      border-radius: 4px;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+    }
+
+    .dv-event {
+      position: absolute;
+      left: 5px;
+      right: 5px;
+      border-radius: 6px;
+      padding: 4px 7px;
+      overflow: hidden;
+      pointer-events: auto;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    }
+
+    .dv-event.flight   { background: var(--blue);     color: white; }
+    .dv-event.train    { background: var(--green);    color: white; }
+    .dv-event.dj       { background: var(--pink);     color: white; }
+    .dv-event.worldcup { background: var(--yellow);   color: var(--navy); }
+    .dv-event.work     { background: var(--gray);     color: white; }
+
+    .dv-event-title {
+      font-size: 0.72rem;
+      font-weight: 800;
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .dv-event-time {
+      font-size: 0.62rem;
+      opacity: 0.85;
+      margin-top: 2px;
+      white-space: nowrap;
+    }
+
+    .dv-free {
       display: flex;
       align-items: center;
-      padding: 0 5px;
-      font-size: 0.58rem;
-      font-weight: 700;
-      color: white;
-      overflow: hidden;
-      white-space: nowrap;
-      cursor: default;
-    }
-
-    .cal-block.flight   { background: var(--blue); }
-    .cal-block.train    { background: var(--green); }
-    .cal-block.dj       { background: var(--pink); }
-    .cal-block.worldcup { background: var(--yellow); color: var(--navy); }
-    .cal-block.work     { background: var(--gray); }
-
-    .cal-axis {
-      display: flex;
-      justify-content: space-between;
-      padding: 2px 10px 8px;
-    }
-
-    .cal-tick {
-      font-size: 0.53rem;
-      color: #9ca3af;
-    }
-
-    .cal-free {
-      font-size: 0.7rem;
-      color: #9ca3af;
+      justify-content: center;
+      height: 200px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
       font-style: italic;
-      padding: 10px 11px;
-      text-align: center;
+    }
+
+    .dv-now-line {
+      position: absolute;
+      left: 0; right: 0;
+      height: 2px;
+      background: #ef4444;
+      z-index: 10;
+    }
+
+    .dv-now-dot {
+      position: absolute;
+      left: -4px;
+      top: -4px;
+      width: 10px;
+      height: 10px;
+      background: #ef4444;
+      border-radius: 50%;
     }
   </style>
 </head>
@@ -482,8 +514,9 @@
 
 <!-- TABS -->
 <div class="tabs">
-  <button class="tab-btn active" onclick="switchTab('timeline', this)">📋&nbsp; Timeline</button>
-  <button class="tab-btn" onclick="switchTab('calendar', this)">🗓&nbsp; Schedule</button>
+  <button class="tab-btn active" onclick="switchTab('timeline', this)">📋 Timeline</button>
+
+  <button class="tab-btn" onclick="switchTab('dayview', this)">📅 Day View</button>
 </div>
 
 <!-- ═══════════════════════════════════
@@ -809,23 +842,25 @@
 </div><!-- /tab-timeline -->
 
 
+
 <!-- ═══════════════════════════════════
-     SCHEDULE / CALENDAR TAB
+     DAY VIEW TAB
 ═══════════════════════════════════ -->
-<div id="tab-calendar" class="tab-content">
-<div class="calendar-view">
-
-  <div class="cal-legend">
-    <div class="legend-item"><div class="legend-dot" style="background:#3d6fad"></div>Flight</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#3a6b4e"></div>Train</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#c2185b"></div>DJ / Event</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#e6ac00"></div>World Cup</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#4b5563"></div>Work</div>
+<div id="tab-dayview" class="tab-content">
+  <div class="dayview">
+    <div class="dv-nav">
+      <button class="dv-nav-btn" id="dv-prev" onclick="dvNav(-1)">‹</button>
+      <div class="dv-nav-center">
+        <div class="dv-nav-day" id="dv-day-num"></div>
+        <div class="dv-nav-date" id="dv-date"></div>
+        <div class="dv-nav-loc" id="dv-loc"></div>
+      </div>
+      <button class="dv-nav-btn" id="dv-next" onclick="dvNav(1)">›</button>
+    </div>
+    <div class="dv-scroll" id="dv-scroll">
+      <div class="dv-grid-wrap" id="dv-grid"></div>
+    </div>
   </div>
-
-  <div id="cal-days"></div>
-
-</div>
 </div>
 
 <script>
@@ -906,51 +941,114 @@ const calData = [
     acts:[{ type:'flight', label:'KRK → JFK', start:6, end:13.58 }] }
 ];
 
-// ── Render calendar ────────────────────────────────────────
-function pct(h) { return (h / 24 * 100).toFixed(2) + '%'; }
 
-const container = document.getElementById('cal-days');
+// ── Day View ───────────────────────────────────────────────
+const HOUR_H = 56;
+let dvIndex = 0;
 
-calData.forEach(d => {
-  const div = document.createElement('div');
-  div.className = 'cal-day';
+function fmtTime(h) {
+  const hrs = Math.floor(h);
+  const mins = Math.round((h - hrs) * 60);
+  const ampm = hrs < 12 ? 'AM' : 'PM';
+  const h12 = hrs === 0 ? 12 : hrs > 12 ? hrs - 12 : hrs;
+  return `${h12}:${mins.toString().padStart(2,'0')} ${ampm}`;
+}
 
-  let barsHTML = '';
-  if (d.acts.length === 0) {
-    barsHTML = '<div class="cal-free">Free day / TBD</div>';
-  } else {
-    d.acts.forEach(a => {
-      const w = Math.max((a.end - a.start) / 24 * 100, 3).toFixed(2);
-      barsHTML += `
-        <div class="cal-row">
-          <div class="cal-bar-track">
-            <div class="cal-block ${a.type}" style="left:${pct(a.start)};width:${w}%">${a.label}</div>
-          </div>
-        </div>`;
-    });
-    barsHTML += `
-      <div class="cal-axis">
-        <span class="cal-tick">12AM</span>
-        <span class="cal-tick">6AM</span>
-        <span class="cal-tick">12PM</span>
-        <span class="cal-tick">6PM</span>
-        <span class="cal-tick">12AM</span>
-      </div>`;
-    barsHTML = '<div class="cal-bars">' + barsHTML + '</div>';
+function renderDayView(idx) {
+  dvIndex = idx;
+  const d = calData[idx];
+
+  document.getElementById('dv-day-num').textContent = `Day ${d.day} of 18`;
+  document.getElementById('dv-date').textContent = d.date;
+  document.getElementById('dv-loc').textContent = d.loc;
+  document.getElementById('dv-prev').disabled = idx === 0;
+  document.getElementById('dv-next').disabled = idx === calData.length - 1;
+
+  const grid = document.getElementById('dv-grid');
+  grid.innerHTML = '';
+
+  // Hour labels column
+  const hoursCol = document.createElement('div');
+  hoursCol.className = 'dv-hours';
+  for (let h = 0; h < 24; h++) {
+    const lbl = document.createElement('div');
+    lbl.className = 'dv-hour-label';
+    lbl.textContent = h === 0 ? '12 AM' : h < 12 ? `${h} AM` : h === 12 ? '12 PM' : `${h-12} PM`;
+    hoursCol.appendChild(lbl);
+  }
+  grid.appendChild(hoursCol);
+
+  // Timeline column
+  const col = document.createElement('div');
+  col.className = 'dv-col';
+
+  // Hour row lines
+  for (let h = 0; h < 24; h++) {
+    const row = document.createElement('div');
+    row.className = 'dv-hour-row';
+    col.appendChild(row);
   }
 
-  div.innerHTML = `
-    <div class="cal-day-header">
-      <div>
-        <div class="cal-day-num">Day ${d.day}</div>
-        <div class="cal-day-label">${d.date}</div>
-      </div>
-      <div class="cal-day-loc">${d.loc}</div>
-    </div>
-    ${barsHTML}`;
+  // Events layer
+  const eventsLayer = document.createElement('div');
+  eventsLayer.className = 'dv-events';
 
-  container.appendChild(div);
-});
+  if (d.acts.length === 0) {
+    const free = document.createElement('div');
+    free.className = 'dv-free';
+    free.textContent = 'Free day / TBD';
+    col.appendChild(free);
+  } else {
+    d.acts.forEach(a => {
+      const el = document.createElement('div');
+      el.className = `dv-event ${a.type}`;
+      const top = a.start * HOUR_H;
+      const height = Math.max((a.end - a.start) * HOUR_H, 24);
+      el.style.top = `${top}px`;
+      el.style.height = `${height}px`;
+      el.innerHTML = `<div class="dv-event-title">${a.label}</div>
+        <div class="dv-event-time">${fmtTime(a.start)} – ${fmtTime(a.end)}</div>`;
+      eventsLayer.appendChild(el);
+    });
+  }
+
+  // Today's current time line (only if this is today's trip day)
+  const tripStart = new Date('2026-07-09');
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const dayOffset = Math.round((today - tripStart) / 86400000);
+  if (dayOffset === idx) {
+    const now = new Date();
+    const nowH = now.getHours() + now.getMinutes() / 60;
+    const line = document.createElement('div');
+    line.className = 'dv-now-line';
+    line.style.top = `${nowH * HOUR_H}px`;
+    line.innerHTML = '<div class="dv-now-dot"></div>';
+    eventsLayer.appendChild(line);
+  }
+
+  col.appendChild(eventsLayer);
+  grid.appendChild(col);
+
+  // Scroll to first event or 7AM
+  const scroll = document.getElementById('dv-scroll');
+  const scrollTo = d.acts.length > 0
+    ? Math.max(0, d.acts[0].start * HOUR_H - 60)
+    : 7 * HOUR_H;
+  setTimeout(() => scroll.scrollTop = scrollTo, 50);
+}
+
+function dvNav(dir) {
+  const next = dvIndex + dir;
+  if (next >= 0 && next < calData.length) renderDayView(next);
+}
+
+// Init day view when tab is first opened
+const origSwitchTab = switchTab;
+window.switchTab = function(id, btn) {
+  origSwitchTab(id, btn);
+  if (id === 'dayview') renderDayView(dvIndex);
+};
 </script>
 
 </body>
