@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Adventure 2026">
+  <title>Liza &amp; Erick's Adventure 2026</title>
+  <style>
+    :root {
+      --navy: #1a2744;
+      --navy-light: #243259;
+      --gold: #c9a227;
+      --gold-light: #f5e9c0;
+      --blue: #3d6fad;
+      --blue-light: #dbeafe;
+      --green: #3a6b4e;
+      --green-light: #d1fae5;
+      --pink: #c2185b;
+      --pink-light: #fce4f0;
+      --yellow: #e6ac00;
+      --yellow-light: #fef9e7;
+      --gray: #4b5563;
+      --gray-light: #f3f4f6;
+      --white: #ffffff;
+      --text: #1f2937;
+      --text-muted: #6b7280;
+      --border: #e5e7eb;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: #f0f2f7;
+      color: var(--text);
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100vh;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: var(--navy);
+      color: white;
+      text-align: center;
+      padding: 28px 16px 22px;
+      position: relative;
+    }
+
+    .header-icons { font-size: 1.8rem; letter-spacing: 6px; margin-bottom: 10px; }
+
+    .header h1 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      line-height: 1.2;
+    }
+
+    .header h2 {
+      color: var(--gold);
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin: 6px 0 4px;
+      letter-spacing: 0.5px;
+    }
+
+    .header-dates {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.65);
+      margin-top: 4px;
+    }
+
+    .countdown {
+      display: inline-block;
+      margin-top: 12px;
+      background: rgba(201,162,39,0.2);
+      border: 1px solid rgba(201,162,39,0.5);
+      color: var(--gold);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── STATS BAR ── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      background: white;
+      border-bottom: 2.5px solid var(--gold);
+    }
+
+    .stat-item {
+      padding: 11px 4px;
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+    .stat-item:last-child { border-right: none; }
+
+    .stat-value {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.58rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 3px;
+    }
+
+    /* ── TABS ── */
+    .tabs {
+      display: flex;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 13px 8px;
+      border: none;
+      background: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .tab-btn.active {
+      color: var(--navy);
+      border-bottom-color: var(--gold);
+    }
+
+    /* ── TAB CONTENT ── */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* ── TIMELINE TAB ── */
+    .timeline { padding: 12px 10px; }
+
+    .day-section { margin-bottom: 16px; }
+
+    .day-header {
+      background: var(--navy);
+      color: white;
+      padding: 10px 13px;
+      border-radius: 8px 8px 0 0;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .day-header .di { font-size: 1rem; }
+
+    .activities {
+      background: white;
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      overflow: hidden;
+    }
+
+    .activity-card { border-bottom: 1px solid var(--border); }
+    .activity-card:last-child { border-bottom: none; }
+
+    .act-header {
+      padding: 7px 12px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .act-header .price-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: rgba(0,0,0,0.15);
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+
+    .type-flight .act-header { background: var(--blue); color: white; }
+    .type-train  .act-header { background: var(--green); color: white; }
+    .type-dj     .act-header { background: var(--pink); color: white; }
+    .type-wc     .act-header { background: var(--yellow); color: var(--navy); }
+    .type-work   .act-header { background: var(--gray); color: white; }
+
+    .act-body { padding: 10px 13px; }
+
+    .act-title {
+      font-size: 0.92rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .type-dj .act-title  { color: var(--pink); }
+    .type-wc .act-title  { color: var(--navy); }
+    .type-work .act-title { color: var(--gray); }
+
+    .act-route {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 2px;
+    }
+
+    .act-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+      line-height: 1.5;
+    }
+
+    .act-sub b { color: var(--navy); font-weight: 700; }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 7px;
+    }
+
+    .chip {
+      font-size: 0.65rem;
+      background: var(--gray-light);
+      color: var(--text-muted);
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .chip.stop  { color: #d97706; background: #fef3c7; }
+    .chip.nonstop { color: #059669; background: #d1fae5; }
+
+    .note-box {
+      background: #fffbf0;
+      border-left: 3px solid var(--gold);
+      padding: 9px 12px;
+      margin: 8px 12px 10px;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.7rem;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .note-box .note-title {
+      font-weight: 700;
+      margin-bottom: 5px;
+      font-size: 0.72rem;
+    }
+
+    .note-box ul { padding-left: 14px; }
+    .note-box li { margin-bottom: 2px; }
+
+    .note-box .note-fine {
+      color: var(--text-muted);
+      font-style: italic;
+      margin-top: 5px;
+      font-size: 0.67rem;
+    }
+
+    .lineup {
+      margin-top: 7px;
+      padding-top: 7px;
+      border-top: 1px solid rgba(0,0,0,0.06);
+      font-size: 0.7rem;
+    }
+
+    .lineup-label {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-muted);
+      margin-bottom: 3px;
+      font-weight: 700;
+    }
+
+    .lineup-names { color: var(--text); }
+
+    .act-quote {
+      font-style: italic;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: 5px;
+    }
+
+    .placeholder {
+      padding: 14px;
+      font-style: italic;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      text-align: center;
+    }
+
+    /* ── CALENDAR TAB ── */
+    .calendar-view { padding: 10px; }
+
+    .cal-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      margin-bottom: 12px;
+      padding: 10px 12px;
+      background: white;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .legend-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+
+    .cal-day {
+      background: white;
+      border-radius: 8px;
+      margin-bottom: 7px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .cal-day-header {
+      background: var(--navy);
+      color: white;
+      padding: 7px 11px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cal-day-num {
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.5);
+      font-weight: 600;
+      margin-bottom: 1px;
+    }
+
+    .cal-day-label {
+      font-size: 0.75rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .cal-day-loc {
+      font-size: 0.62rem;
+      color: rgba(255,255,255,0.6);
+      text-align: right;
+      max-width: 45%;
+      line-height: 1.3;
+    }
+
+    .cal-bars {
+      padding: 8px 10px 2px;
+    }
+
+    .cal-row {
+      margin-bottom: 6px;
+    }
+
+    .cal-row-label {
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .cal-bar-track {
+      position: relative;
+      height: 28px;
+      background: var(--gray-light);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .cal-block {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      padding: 0 5px;
+      font-size: 0.58rem;
+      font-weight: 700;
+      color: white;
+      overflow: hidden;
+      white-space: nowrap;
+      cursor: default;
+    }
+
+    .cal-block.flight   { background: var(--blue); }
+    .cal-block.train    { background: var(--green); }
+    .cal-block.dj       { background: var(--pink); }
+    .cal-block.worldcup { background: var(--yellow); color: var(--navy); }
+    .cal-block.work     { background: var(--gray); }
+
+    .cal-axis {
+      display: flex;
+      justify-content: space-between;
+      padding: 2px 10px 8px;
+    }
+
+    .cal-tick {
+      font-size: 0.53rem;
+      color: #9ca3af;
+    }
+
+    .cal-free {
+      font-size: 0.7rem;
+      color: #9ca3af;
+      font-style: italic;
+      padding: 10px 11px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-icons">✈️ ⭐ 🎵 ⚽</div>
+  <h1>Liza &amp; Erick's<br>Adventure 2026</h1>
+  <h2>Hike / Rave / Football Adventure</h2>
+  <div class="header-dates">July 9 – July 26, 2026 &nbsp;·&nbsp; New York → Kraków &amp; Beyond</div>
+  <div class="countdown" id="countdown">Loading…</div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-item">
+    <div class="stat-value">18</div>
+    <div class="stat-label">Days</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value">3+</div>
+    <div class="stat-label">Countries</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value">2 RT</div>
+    <div class="stat-label">Flights</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value">$1,377</div>
+    <div class="stat-label">Booked</div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('timeline', this)">📋&nbsp; Timeline</button>
+  <button class="tab-btn" onclick="switchTab('calendar', this)">🗓&nbsp; Schedule</button>
+</div>
+
+<!-- ═══════════════════════════════════
+     TIMELINE TAB
+═══════════════════════════════════ -->
+<div id="tab-timeline" class="tab-content active">
+<div class="timeline">
+
+  <!-- DAY 1 -->
+  <div class="day-section">
+    <div class="day-header"><span class="di">✈️</span> DAY 1 · THURSDAY, JULY 9 · NEW YORK → KRAKÓW, POLAND</div>
+    <div class="activities">
+      <div class="activity-card type-flight">
+        <div class="act-header">
+          <span>✈️ FLIGHT</span>
+          <span class="price-badge">$913</span>
+        </div>
+        <div class="act-body">
+          <div class="act-route">8:30 PM → 2:10 PM<sup>+1</sup></div>
+          <div class="act-sub"><b>JFK → KRK</b></div>
+          <div class="act-sub">SWISS · LOT · Operated by Helvetic</div>
+          <div class="chips">
+            <span class="chip">11h 40m</span>
+            <span class="chip stop">1 STOP · ZRH (2h 5m)</span>
+            <span class="chip">387 kg CO₂e · ~18% emissions</span>
+          </div>
+        </div>
+      </div>
+      <div class="note-box">
+        <div class="note-title">ℹ️ Travel Notes</div>
+        <ul>
+          <li>Depart JFK Terminal 4 — arrive early, SWISS/LOT can be busy</li>
+          <li>Stopover in Zürich (ZRH) — 2h 5m layover</li>
+          <li>Arrive Kraków John Paul II Airport (KRK) next afternoon</li>
+        </ul>
+        <div class="note-fine">* Price shown is lowest total round-trip fare (Economy)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 2 -->
+  <div class="day-section">
+    <div class="day-header"><span class="di">🚂</span> DAY 2 · FRIDAY, JULY 10 · KRAKÓW → ZAKOPANE</div>
+    <div class="activities">
+      <div class="activity-card type-train">
+        <div class="act-header">
+          <span>🚂 IC TRAIN</span>
+          <span class="price-badge">9,00 PLN · ~$2.25</span>
+        </div>
+        <div class="act-body">
+          <div class="act-route">12:35 → 14:56</div>
+          <div class="act-sub"><b>Kraków Główny → Zakopane</b></div>
+          <div class="act-sub">EIC 5350 Kaszub · Direct / Fastest</div>
+          <div class="act-sub">Dep: Platform 2, Track 5 &nbsp;|&nbsp; Arr: Platform 2, Track 3</div>
+          <div class="chips">
+            <span class="chip">2h 21m</span>
+            <span class="chip">Class 2 · SuperPrice</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 3 -->
+  <div class="day-section">
+    <div class="day-header"><span class="di">⛰️</span> DAY 3 · SATURDAY, JULY 11 · ZAKOPANE, POLAND</div>
+    <div class="activities"><div class="placeholder">● Details coming soon…</div></div>
+  </div>
+
+  <!-- DAY 4 -->
+  <div class="day-section">
+    <div class="day-header"><span class="di">⛰️</span> DAY 4 · SUNDAY, JULY 12 · ZAKOPANE, POLAND</div>
+    <div class="activities"><div class="placeholder">● Details coming soon…</div></div>
+  </div>
+
+  <!-- DAY 5 -->
+  <div class="day-section">
+    <div class="day-header"><span class="di">📍</span> DAY 5 · MONDAY, JULY 13 · TBD</div>
+    <div class="activities"><div class="placeholder">● Details coming soon…</div></div>
+  </div>
+
+  <!-- DAY 6 -->
+  <div class="day-section">
+    <div class="day-header"><span class="di">📍</span> DAY 6 · TUESDAY, JULY 14 · TBD</div>
+    <div class="activities"><div class="placeholder">● Details coming soon…</div></div>
+  </div>
+
+  <!-- DAY 7 -->
+  <div class="day-section">
+    <div class="day-header"><span class="di">📍</span> DAY 7 · WEDNESDAY, JULY 15 · TBD</div>
+    <div class="activities"><div class="placeholder">● Details coming soon…</div></div>
+  </div>
+
+  <!-- DAY 8 -->
+  <div class="day-section">
+    <div class="day-header"><span class="di">⭐</span> DAY 8 · THURSDAY, JULY 16 · IBIZA, SPAIN</div>
+    <div class="activities">
+      <div class="activity-card type-dj">
+        <div class="act-header">
+          <span>🎵 DJ SET / EVENT</span>
+          <span class="price-badge">€50 · ~$54</span>
+        </div>
+        <div class="act-body">
+          <div class="act-title">FISHER</div>
+          <div class="act-sub">📍 UNVRS, Ibiza</div>
+          <div class="act-sub">📅 Thursday, July 16, 2026</div>
+          <div class="act-sub">🕐 11:00 PM – 06:00 AM &nbsp;<b>(7h)</b></div>
+          <div class="act-quote">"Pulsing basslines, crowd roars, and non-stop euphoria"</div>
+          <div class="lineup">
+            <div class="lineup-label">Line Up</div>
+            <div class="lineup-names">⭐ Fisher &nbsp;·&nbsp; ○ Salute</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 9 -->
+  <div class="day-section">
+    <div class="day-header"><span class="di">⭐</span> DAY 9 · FRIDAY, JULY 17 · IBIZA, SPAIN</div>
+    <div class="activities">
+      <div class="activity-card type-dj">
+        <div class="act-header">
+          <span>🎵 DJ SET / EVENT</span>
+          <span class="price-badge">€135 · ~$146</span>
+        </div>
+        <div class="act-body">
+          <div class="act-title">Calvin Harris b2b MK</div>
+          <div class="act-sub">📍 Ushaïa Ibiza</div>
+          <div class="act-sub">📅 Friday, July 17, 2026</div>
+          <div class="act-sub">🕐 17:00 – 23:00 &nbsp;<b>(6h)</b></div>
+          <div class="act-quote">"Standard Ticket – 7th Release · General Admission"</div>
+          <div class="lineup">
+            <div class="lineup-label">Line Up</div>
+            <div class="lineup-names">⭐ Calvin Harris &nbsp;·&nbsp; ○ MK</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 10 -->
+  <div class="day-section">
+    <div class="day-header"><span class="di">✈️</span> DAY 10 · SATURDAY, JULY 18 · MADRID, SPAIN</div>
+    <div class="activities">
+      <div class="activity-card type-flight">
+        <div class="act-header">
+          <span>✈️ FLIGHT</span>
+          <span class="price-badge">$29</span>
+        </div>
+        <div class="act-body">
+          <div class="act-route">10:30 AM → 11:50 AM</div>
+          <div class="act-sub"><b>IBZ → MAD</b></div>
+          <div class="act-sub">Ryanair</div>
+          <div class="chips">
+            <span class="chip">1h 20m</span>
+            <span class="chip nonstop">Nonstop</span>
+            <span class="chip">59 kg CO₂e · Avg emissions</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 11 -->
+  <div class="day-section">
+    <div class="day-header"><span class="di">⭐</span> DAY 11 · SUNDAY, JULY 19 · MADRID, SPAIN</div>
+    <div class="activities">
+      <div class="activity-card type-wc">
+        <div class="act-header">
+          <span>⚽ WORLD CUP FINAL</span>
+        </div>
+        <div class="act-body">
+          <div class="act-title">2026 FIFA World Cup Final</div>
+          <div class="act-sub">📍 Madrid, Spain</div>
+          <div class="act-sub">🕘 <b>9:00 PM kick-off</b></div>
+          <div class="act-quote">The biggest match in world football — live in Madrid! ♻️</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 12 -->
+  <div class="day-section">
+    <div class="day-header"><span class="di">✈️</span> DAY 12 · MONDAY, JULY 20 · MADRID → RZESZÓW, POLAND</div>
+    <div class="activities">
+      <div class="activity-card type-flight">
+        <div class="act-header">
+          <span>✈️ FLIGHT</span>
+          <span class="price-badge">$233</span>
+        </div>
+        <div class="act-body">
+          <div class="act-route">6:00 AM → 11:20 AM</div>
+          <div class="act-sub"><b>MAD → RZE</b></div>
+          <div class="act-sub">LOT</div>
+          <div class="chips">
+            <span class="chip">5h 20m</span>
+            <span class="chip stop">1 STOP · WAW (1h)</span>
+            <span class="chip">223 kg CO₂e · ~24% emissions</span>
+          </div>
+        </div>
+      </div>
+      <div class="activity-card type-work">
+        <div class="act-header">
+          <span>💻 WORK BLOCK</span>
+        </div>
+        <div class="act-body">
+          <div class="act-title">Remote Work</div>
+          <div class="act-sub">🕒 3:00 PM – 11:00 PM &nbsp;<b>(8h)</b></div>
+          <div class="act-sub" style="font-style:italic">laptop out, headphones on 🎧</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 13 -->
+  <div class="day-section">
+    <div class="day-header"><span class="di">💻</span> DAY 13 · TUESDAY, JULY 21 · RZESZÓW, POLAND</div>
+    <div class="activities">
+      <div class="activity-card type-work">
+        <div class="act-header"><span>💻 WORK BLOCK</span></div>
+        <div class="act-body">
+          <div class="act-title">Remote Work</div>
+          <div class="act-sub">🕒 3:00 PM – 11:00 PM &nbsp;<b>(8h)</b></div>
+          <div class="act-sub" style="font-style:italic">laptop out, headphones on 🎧</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 14 -->
+  <div class="day-section">
+    <div class="day-header"><span class="di">💻</span> DAY 14 · WEDNESDAY, JULY 22 · RZESZÓW, POLAND</div>
+    <div class="activities">
+      <div class="activity-card type-work">
+        <div class="act-header"><span>💻 WORK BLOCK</span></div>
+        <div class="act-body">
+          <div class="act-title">Remote Work</div>
+          <div class="act-sub">🕒 3:00 PM – 11:00 PM &nbsp;<b>(8h)</b></div>
+          <div class="act-sub" style="font-style:italic">laptop out, headphones on 🎧</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 15 -->
+  <div class="day-section">
+    <div class="day-header"><span class="di">💻</span> DAY 15 · THURSDAY, JULY 23 · SĘDZISZÓW, POLAND</div>
+    <div class="activities">
+      <div class="activity-card type-work">
+        <div class="act-header"><span>💻 WORK BLOCK</span></div>
+        <div class="act-body">
+          <div class="act-title">Remote Work</div>
+          <div class="act-sub">🕒 3:00 PM – 11:00 PM &nbsp;<b>(8h)</b></div>
+          <div class="act-sub" style="font-style:italic">laptop out, headphones on 🎧</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 16 -->
+  <div class="day-section">
+    <div class="day-header"><span class="di">💻</span> DAY 16 · FRIDAY, JULY 24 · SĘDZISZÓW, POLAND</div>
+    <div class="activities">
+      <div class="activity-card type-work">
+        <div class="act-header"><span>💻 WORK BLOCK</span></div>
+        <div class="act-body">
+          <div class="act-title">Remote Work</div>
+          <div class="act-sub">🕒 3:00 PM – 11:00 PM &nbsp;<b>(8h)</b></div>
+          <div class="act-sub" style="font-style:italic">laptop out, headphones on 🎧</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 17 -->
+  <div class="day-section">
+    <div class="day-header"><span class="di">🚂</span> DAY 17 · SATURDAY, JULY 25 · SĘDZISZÓW → KRAKÓW</div>
+    <div class="activities">
+      <div class="activity-card type-train">
+        <div class="act-header">
+          <span>🚂 IC TRAIN</span>
+          <span class="price-badge">TBD PLN</span>
+        </div>
+        <div class="act-body">
+          <div class="act-route">16:57 → 18:15</div>
+          <div class="act-sub"><b>Sędziszów Młp. → Kraków Główny</b></div>
+          <div class="act-sub">IC 3603 Wyspiański · Direct / Fastest</div>
+          <div class="act-sub">Dep: Platform 2, Track 2 &nbsp;|&nbsp; Arr: Platform 2, Track 3</div>
+          <div class="chips">
+            <span class="chip">1h 18m</span>
+            <span class="chip">Class 2 · SuperPrice</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 18 -->
+  <div class="day-section">
+    <div class="day-header"><span class="di">✈️</span> DAY 18 · SUNDAY, JULY 26 · KRAKÓW → NEW YORK</div>
+    <div class="activities">
+      <div class="activity-card type-flight">
+        <div class="act-header">
+          <span>✈️ FLIGHT</span>
+          <span class="price-badge">Included (RT)</span>
+        </div>
+        <div class="act-body">
+          <div class="act-route">6:00 AM → 1:35 PM</div>
+          <div class="act-sub"><b>KRK → JFK</b></div>
+          <div class="act-sub">Lufthansa · United · Brussels Airlines · LOT</div>
+          <div class="chips">
+            <span class="chip">13h 35m</span>
+            <span class="chip stop">1 STOP · FRA (3h 15m)</span>
+            <span class="chip">492 kg CO₂e · +9% emissions</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /timeline -->
+</div><!-- /tab-timeline -->
+
+
+<!-- ═══════════════════════════════════
+     SCHEDULE / CALENDAR TAB
+═══════════════════════════════════ -->
+<div id="tab-calendar" class="tab-content">
+<div class="calendar-view">
+
+  <div class="cal-legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#3d6fad"></div>Flight</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#3a6b4e"></div>Train</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#c2185b"></div>DJ / Event</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#e6ac00"></div>World Cup</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#4b5563"></div>Work</div>
+  </div>
+
+  <div id="cal-days"></div>
+
+</div>
+</div>
+
+<script>
+// ── Tab switching ──────────────────────────────────────────
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── Countdown ─────────────────────────────────────────────
+(function() {
+  const depart = new Date('2026-07-09T00:00:00');
+  const now = new Date();
+  const diff = Math.ceil((depart - now) / 86400000);
+  const el = document.getElementById('countdown');
+  if (diff > 0) el.textContent = '🚀 ' + diff + ' days to departure!';
+  else if (diff === 0) el.textContent = '🛫 Today is the day!';
+  else el.textContent = '🌍 Adventure is happening!';
+})();
+
+// ── Calendar data ──────────────────────────────────────────
+// Activities: { type, label, start (0-24 decimal), end (0-24 decimal) }
+const calData = [
+  { day:1,  date:'Thu, Jul 9',  loc:'New York → Kraków',
+    acts:[{ type:'flight', label:'JFK → KRK (departs)', start:20.5, end:24 }] },
+
+  { day:2,  date:'Fri, Jul 10', loc:'Kraków → Zakopane',
+    acts:[
+      { type:'flight', label:'In flight → KRK arrives 2:10 PM', start:0, end:14.17 },
+      { type:'train',  label:'KRK → Zakopane', start:12.58, end:14.93 }
+    ]},
+
+  { day:3,  date:'Sat, Jul 11', loc:'Zakopane, Poland', acts:[] },
+  { day:4,  date:'Sun, Jul 12', loc:'Zakopane, Poland', acts:[] },
+  { day:5,  date:'Mon, Jul 13', loc:'TBD', acts:[] },
+  { day:6,  date:'Tue, Jul 14', loc:'TBD', acts:[] },
+  { day:7,  date:'Wed, Jul 15', loc:'TBD', acts:[] },
+
+  { day:8,  date:'Thu, Jul 16', loc:'Ibiza, Spain',
+    acts:[{ type:'dj', label:'FISHER @ UNVRS (→ 6AM)', start:23, end:24 }] },
+
+  { day:9,  date:'Fri, Jul 17', loc:'Ibiza, Spain',
+    acts:[
+      { type:'dj', label:'FISHER (cont. → 6AM)', start:0,  end:6 },
+      { type:'dj', label:'Calvin Harris b2b MK', start:17, end:23 }
+    ]},
+
+  { day:10, date:'Sat, Jul 18', loc:'Madrid, Spain',
+    acts:[{ type:'flight', label:'IBZ → MAD', start:10.5, end:11.83 }] },
+
+  { day:11, date:'Sun, Jul 19', loc:'Madrid, Spain',
+    acts:[{ type:'worldcup', label:'⚽ World Cup Final', start:21, end:23.5 }] },
+
+  { day:12, date:'Mon, Jul 20', loc:'Madrid → Rzeszów',
+    acts:[
+      { type:'flight', label:'MAD → RZE', start:6,  end:11.33 },
+      { type:'work',   label:'Remote Work', start:15, end:23 }
+    ]},
+
+  { day:13, date:'Tue, Jul 21', loc:'Rzeszów, Poland',
+    acts:[{ type:'work', label:'Remote Work', start:15, end:23 }] },
+
+  { day:14, date:'Wed, Jul 22', loc:'Rzeszów, Poland',
+    acts:[{ type:'work', label:'Remote Work', start:15, end:23 }] },
+
+  { day:15, date:'Thu, Jul 23', loc:'Sędziszów, Poland',
+    acts:[{ type:'work', label:'Remote Work', start:15, end:23 }] },
+
+  { day:16, date:'Fri, Jul 24', loc:'Sędziszów, Poland',
+    acts:[{ type:'work', label:'Remote Work', start:15, end:23 }] },
+
+  { day:17, date:'Sat, Jul 25', loc:'Sędziszów → Kraków',
+    acts:[{ type:'train', label:'Sędziszów → KRK', start:16.95, end:18.25 }] },
+
+  { day:18, date:'Sun, Jul 26', loc:'Kraków → New York',
+    acts:[{ type:'flight', label:'KRK → JFK', start:6, end:13.58 }] }
+];
+
+// ── Render calendar ────────────────────────────────────────
+function pct(h) { return (h / 24 * 100).toFixed(2) + '%'; }
+
+const container = document.getElementById('cal-days');
+
+calData.forEach(d => {
+  const div = document.createElement('div');
+  div.className = 'cal-day';
+
+  let barsHTML = '';
+  if (d.acts.length === 0) {
+    barsHTML = '<div class="cal-free">Free day / TBD</div>';
+  } else {
+    d.acts.forEach(a => {
+      const w = Math.max((a.end - a.start) / 24 * 100, 3).toFixed(2);
+      barsHTML += `
+        <div class="cal-row">
+          <div class="cal-bar-track">
+            <div class="cal-block ${a.type}" style="left:${pct(a.start)};width:${w}%">${a.label}</div>
+          </div>
+        </div>`;
+    });
+    barsHTML += `
+      <div class="cal-axis">
+        <span class="cal-tick">12AM</span>
+        <span class="cal-tick">6AM</span>
+        <span class="cal-tick">12PM</span>
+        <span class="cal-tick">6PM</span>
+        <span class="cal-tick">12AM</span>
+      </div>`;
+    barsHTML = '<div class="cal-bars">' + barsHTML + '</div>';
+  }
+
+  div.innerHTML = `
+    <div class="cal-day-header">
+      <div>
+        <div class="cal-day-num">Day ${d.day}</div>
+        <div class="cal-day-label">${d.date}</div>
+      </div>
+      <div class="cal-day-loc">${d.loc}</div>
+    </div>
+    ${barsHTML}`;
+
+  container.appendChild(div);
+});
+</script>
+
+</body>
+</html>
