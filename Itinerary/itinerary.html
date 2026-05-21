@@ -44,33 +44,48 @@
     /* ── HEADER ── */
     .header {
       background: var(--navy);
+      background-image: url('hero.jpg');
+      background-size: cover;
+      background-position: center 40%;
       color: white;
       text-align: center;
-      padding: 28px 16px 22px;
+      padding: 48px 16px 32px;
       position: relative;
     }
 
-    .header-icons { font-size: 1.8rem; letter-spacing: 6px; margin-bottom: 10px; }
+    .header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(10, 18, 40, 0.58);
+    }
+
+    .header > * { position: relative; z-index: 1; }
+
+    .header-icons { display: none; }
 
     .header h1 {
       font-size: 1.45rem;
       font-weight: 800;
       letter-spacing: 0.3px;
       line-height: 1.2;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.9);
     }
 
     .header h2 {
-      color: var(--gold);
+      color: #a8d8f0;
       font-size: 0.95rem;
       font-weight: 700;
       margin: 6px 0 4px;
       letter-spacing: 0.5px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.9);
     }
 
     .header-dates {
       font-size: 0.78rem;
-      color: rgba(255,255,255,0.65);
+      color: rgba(255,255,255,0.85);
       margin-top: 4px;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.8);
     }
 
     .countdown {
@@ -86,35 +101,34 @@
       letter-spacing: 0.5px;
     }
 
-    /* ── STATS BAR ── */
+    /* ── STATS PILLS ── */
     .stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      background: white;
-      border-bottom: 2.5px solid var(--gold);
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      gap: 6px;
+      background: var(--navy);
+      padding: 12px 10px 16px;
     }
 
     .stat-item {
-      padding: 11px 4px;
-      text-align: center;
-      border-right: 1px solid var(--border);
-    }
-    .stat-item:last-child { border-right: none; }
-
-    .stat-value {
-      font-size: 1.05rem;
-      font-weight: 800;
-      color: var(--navy);
-      line-height: 1;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      white-space: nowrap;
     }
 
-    .stat-label {
-      font-size: 0.58rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-top: 3px;
-    }
+    .stat-item:nth-child(1) { background: #d4ecd4; color: #1f5c2e; }
+    .stat-item:nth-child(2) { background: #d4e4f7; color: #1a3a6b; }
+    .stat-item:nth-child(3) { background: #fde8d0; color: #7a3310; }
+    .stat-item:nth-child(4) { background: #f5e6fa; color: #5c1f7a; }
+
+    .stat-value { font-weight: 800; font-size: 0.8rem; }
+    .stat-label { font-weight: 600; }
 
     /* ── TABS ── */
     .tabs {
@@ -460,22 +474,10 @@
 
 <!-- STATS -->
 <div class="stats">
-  <div class="stat-item">
-    <div class="stat-value">18</div>
-    <div class="stat-label">Days</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-value">3+</div>
-    <div class="stat-label">Countries</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-value">2 RT</div>
-    <div class="stat-label">Flights</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-value">$1,377</div>
-    <div class="stat-label">Booked</div>
-  </div>
+  <div class="stat-item"><span class="stat-value">18</span><span class="stat-label">Days</span></div>
+  <div class="stat-item"><span class="stat-value">3+</span><span class="stat-label">Countries</span></div>
+  <div class="stat-item"><span class="stat-value">2</span><span class="stat-label">Flights</span></div>
+  <div class="stat-item"><span class="stat-value">$1,377</span><span class="stat-label">Cost</span></div>
 </div>
 
 <!-- TABS -->
@@ -492,7 +494,7 @@
 
   <!-- DAY 1 -->
   <div class="day-section">
-    <div class="day-header"><span class="di">✈️</span> DAY 1 · THURSDAY, JULY 9 · NEW YORK → KRAKÓW, POLAND</div>
+    <div class="day-header">DAY 1 · THURSDAY, JULY 9 · NEW YORK → KRAKÓW, POLAND</div>
     <div class="activities">
       <div class="activity-card type-flight">
         <div class="act-header">
@@ -524,7 +526,7 @@
 
   <!-- DAY 2 -->
   <div class="day-section">
-    <div class="day-header"><span class="di">🚂</span> DAY 2 · FRIDAY, JULY 10 · KRAKÓW → ZAKOPANE</div>
+    <div class="day-header">DAY 2 · FRIDAY, JULY 10 · KRAKÓW → ZAKOPANE</div>
     <div class="activities">
       <div class="activity-card type-train">
         <div class="act-header">
@@ -547,37 +549,37 @@
 
   <!-- DAY 3 -->
   <div class="day-section">
-    <div class="day-header"><span class="di">⛰️</span> DAY 3 · SATURDAY, JULY 11 · ZAKOPANE, POLAND</div>
+    <div class="day-header">DAY 3 · SATURDAY, JULY 11 · ZAKOPANE, POLAND</div>
     <div class="activities"><div class="placeholder">● Details coming soon…</div></div>
   </div>
 
   <!-- DAY 4 -->
   <div class="day-section">
-    <div class="day-header"><span class="di">⛰️</span> DAY 4 · SUNDAY, JULY 12 · ZAKOPANE, POLAND</div>
+    <div class="day-header">DAY 4 · SUNDAY, JULY 12 · ZAKOPANE, POLAND</div>
     <div class="activities"><div class="placeholder">● Details coming soon…</div></div>
   </div>
 
   <!-- DAY 5 -->
   <div class="day-section">
-    <div class="day-header"><span class="di">📍</span> DAY 5 · MONDAY, JULY 13 · TBD</div>
+    <div class="day-header">DAY 5 · MONDAY, JULY 13 · TBD</div>
     <div class="activities"><div class="placeholder">● Details coming soon…</div></div>
   </div>
 
   <!-- DAY 6 -->
   <div class="day-section">
-    <div class="day-header"><span class="di">📍</span> DAY 6 · TUESDAY, JULY 14 · TBD</div>
+    <div class="day-header">DAY 6 · TUESDAY, JULY 14 · TBD</div>
     <div class="activities"><div class="placeholder">● Details coming soon…</div></div>
   </div>
 
   <!-- DAY 7 -->
   <div class="day-section">
-    <div class="day-header"><span class="di">📍</span> DAY 7 · WEDNESDAY, JULY 15 · TBD</div>
+    <div class="day-header">DAY 7 · WEDNESDAY, JULY 15 · TBD</div>
     <div class="activities"><div class="placeholder">● Details coming soon…</div></div>
   </div>
 
   <!-- DAY 8 -->
   <div class="day-section">
-    <div class="day-header"><span class="di">⭐</span> DAY 8 · THURSDAY, JULY 16 · IBIZA, SPAIN</div>
+    <div class="day-header">DAY 8 · THURSDAY, JULY 16 · IBIZA, SPAIN</div>
     <div class="activities">
       <div class="activity-card type-dj">
         <div class="act-header">
@@ -601,7 +603,7 @@
 
   <!-- DAY 9 -->
   <div class="day-section">
-    <div class="day-header"><span class="di">⭐</span> DAY 9 · FRIDAY, JULY 17 · IBIZA, SPAIN</div>
+    <div class="day-header">DAY 9 · FRIDAY, JULY 17 · IBIZA, SPAIN</div>
     <div class="activities">
       <div class="activity-card type-dj">
         <div class="act-header">
@@ -625,7 +627,7 @@
 
   <!-- DAY 10 -->
   <div class="day-section">
-    <div class="day-header"><span class="di">✈️</span> DAY 10 · SATURDAY, JULY 18 · MADRID, SPAIN</div>
+    <div class="day-header">DAY 10 · SATURDAY, JULY 18 · MADRID, SPAIN</div>
     <div class="activities">
       <div class="activity-card type-flight">
         <div class="act-header">
@@ -648,7 +650,7 @@
 
   <!-- DAY 11 -->
   <div class="day-section">
-    <div class="day-header"><span class="di">⭐</span> DAY 11 · SUNDAY, JULY 19 · MADRID, SPAIN</div>
+    <div class="day-header">DAY 11 · SUNDAY, JULY 19 · MADRID, SPAIN</div>
     <div class="activities">
       <div class="activity-card type-wc">
         <div class="act-header">
@@ -666,7 +668,7 @@
 
   <!-- DAY 12 -->
   <div class="day-section">
-    <div class="day-header"><span class="di">✈️</span> DAY 12 · MONDAY, JULY 20 · MADRID → RZESZÓW, POLAND</div>
+    <div class="day-header">DAY 12 · MONDAY, JULY 20 · MADRID → RZESZÓW, POLAND</div>
     <div class="activities">
       <div class="activity-card type-flight">
         <div class="act-header">
@@ -699,7 +701,7 @@
 
   <!-- DAY 13 -->
   <div class="day-section">
-    <div class="day-header"><span class="di">💻</span> DAY 13 · TUESDAY, JULY 21 · RZESZÓW, POLAND</div>
+    <div class="day-header">DAY 13 · TUESDAY, JULY 21 · RZESZÓW, POLAND</div>
     <div class="activities">
       <div class="activity-card type-work">
         <div class="act-header"><span>💻 WORK BLOCK</span></div>
@@ -714,7 +716,7 @@
 
   <!-- DAY 14 -->
   <div class="day-section">
-    <div class="day-header"><span class="di">💻</span> DAY 14 · WEDNESDAY, JULY 22 · RZESZÓW, POLAND</div>
+    <div class="day-header">DAY 14 · WEDNESDAY, JULY 22 · RZESZÓW, POLAND</div>
     <div class="activities">
       <div class="activity-card type-work">
         <div class="act-header"><span>💻 WORK BLOCK</span></div>
@@ -729,7 +731,7 @@
 
   <!-- DAY 15 -->
   <div class="day-section">
-    <div class="day-header"><span class="di">💻</span> DAY 15 · THURSDAY, JULY 23 · SĘDZISZÓW, POLAND</div>
+    <div class="day-header">DAY 15 · THURSDAY, JULY 23 · SĘDZISZÓW, POLAND</div>
     <div class="activities">
       <div class="activity-card type-work">
         <div class="act-header"><span>💻 WORK BLOCK</span></div>
@@ -744,7 +746,7 @@
 
   <!-- DAY 16 -->
   <div class="day-section">
-    <div class="day-header"><span class="di">💻</span> DAY 16 · FRIDAY, JULY 24 · SĘDZISZÓW, POLAND</div>
+    <div class="day-header">DAY 16 · FRIDAY, JULY 24 · SĘDZISZÓW, POLAND</div>
     <div class="activities">
       <div class="activity-card type-work">
         <div class="act-header"><span>💻 WORK BLOCK</span></div>
@@ -759,7 +761,7 @@
 
   <!-- DAY 17 -->
   <div class="day-section">
-    <div class="day-header"><span class="di">🚂</span> DAY 17 · SATURDAY, JULY 25 · SĘDZISZÓW → KRAKÓW</div>
+    <div class="day-header">DAY 17 · SATURDAY, JULY 25 · SĘDZISZÓW → KRAKÓW</div>
     <div class="activities">
       <div class="activity-card type-train">
         <div class="act-header">
@@ -782,7 +784,7 @@
 
   <!-- DAY 18 -->
   <div class="day-section">
-    <div class="day-header"><span class="di">✈️</span> DAY 18 · SUNDAY, JULY 26 · KRAKÓW → NEW YORK</div>
+    <div class="day-header">DAY 18 · SUNDAY, JULY 26 · KRAKÓW → NEW YORK</div>
     <div class="activities">
       <div class="activity-card type-flight">
         <div class="act-header">
