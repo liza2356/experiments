@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="closet.">
+  <title>closet.</title>
+  <style>
+    :root {
+      --ink:   #131311;
+      --stone: #93989b;
+      --terra: #e45a33;
+      --sand:  #eeeae7;
+      --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--sand);
+      min-height: 100vh;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      padding: 52px 18px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .back-btn {
+      background: rgba(255,255,255,0.16);
+      border: none;
+      border-radius: 50%;
+      width: 36px; height: 36px;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      font-size: 1.1rem;
+      cursor: pointer;
+      text-decoration: none;
+      line-height: 1;
+    }
+
+    .header-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: white;
+      line-height: 1.1;
+    }
+
+    .header-count {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.6);
+      margin-top: 2px;
+    }
+
+    /* ── FILTER BAR ── */
+    .filter-bar {
+      background: var(--white);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .filter-scroll {
+      display: flex;
+      gap: 7px;
+      padding: 10px 14px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      align-items: center;
+    }
+    .filter-scroll::-webkit-scrollbar { display: none; }
+
+    .pill {
+      background: var(--white);
+      border: 1.5px solid #e4e0dc;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--ink);
+      white-space: nowrap;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.13s, color 0.13s, border-color 0.13s;
+      flex-shrink: 0;
+    }
+
+    .pill.active {
+      background: var(--ink);
+      color: var(--white);
+      border-color: var(--ink);
+    }
+
+    .color-pill-wrap { position: relative; flex-shrink: 0; }
+
+    /* ── TYPE DROPDOWN ── */
+    .type-drop {
+      position: fixed;
+      background: var(--white);
+      border-radius: 14px;
+      box-shadow: 0 6px 28px rgba(0,0,0,0.16);
+      padding: 6px;
+      display: none;
+      flex-direction: column;
+      z-index: 200;
+      min-width: 160px;
+    }
+    .type-drop.open { display: flex; }
+
+    .type-drop-option {
+      background: none;
+      border: none;
+      padding: 10px 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--ink);
+      cursor: pointer;
+      text-align: left;
+      width: 100%;
+      border-radius: 9px;
+      font-family: inherit;
+      transition: background 0.12s;
+    }
+    .type-drop-option:active { background: #f0eeec; }
+    .type-drop-option.selected { background: var(--ink); color: white; }
+
+    /* ── COLOR DROPDOWN ── */
+    .color-drop {
+      position: fixed;
+      background: var(--white);
+      border-radius: 14px;
+      box-shadow: 0 6px 28px rgba(0,0,0,0.16);
+      padding: 14px;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 200;
+      width: 232px;
+    }
+    .color-drop.open { display: flex; }
+
+    .color-drop-title {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+
+    .color-drop-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+    }
+
+    .c-swatch {
+      aspect-ratio: 1 / 1;
+      width: 100%;
+      border-radius: 50%;
+      border: 2.5px solid transparent;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.12s;
+    }
+    .c-swatch.selected {
+      border-color: var(--ink);
+      transform: scale(1.12);
+    }
+    .c-swatch.selected::after {
+      content: '✓';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      font-weight: 800;
+      color: white;
+      text-shadow: 0 0 3px rgba(0,0,0,0.6);
+    }
+
+    .color-drop-clear {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--stone);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      text-align: left;
+      padding: 0;
+    }
+
+    /* ── GRID ── */
+    .grid-wrap { padding: 14px 14px 100px; }
+
+    .items-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 11px;
+    }
+
+    .item-card {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      aspect-ratio: 1 / 1;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      background: #d8d4d0;
+      transition: transform 0.13s;
+    }
+    .item-card:active { transform: scale(0.96); }
+
+    .item-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .item-card-placeholder {
+      width: 100%; height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+    }
+
+    .item-card-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 22px 10px 10px;
+      background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%);
+    }
+
+    .item-card-name {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: white;
+      line-height: 1.2;
+    }
+
+    .item-card-sub {
+      font-size: 0.6rem;
+      color: rgba(255,255,255,0.7);
+      margin-top: 2px;
+    }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 32px;
+      text-align: center;
+      grid-column: span 2;
+    }
+    .empty-icon { font-size: 3rem; margin-bottom: 14px; opacity: 0.3; }
+    .empty-title { font-size: 0.95rem; font-weight: 700; color: var(--ink); opacity: 0.4; }
+    .empty-sub { font-size: 0.75rem; color: var(--stone); margin-top: 5px; opacity: 0.7; }
+
+    /* ── FAB ── */
+    .fab {
+      position: fixed;
+      bottom: 32px;
+      right: max(16px, calc(50% - 224px));
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      border: none;
+      background: var(--ink);
+      color: white;
+      font-size: 1.8rem;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(19,19,17,0.35);
+      cursor: pointer;
+      z-index: 100;
+      transition: transform 0.13s;
+    }
+    .fab:active { transform: scale(0.92); }
+
+    /* ── MODAL ── */
+    .modal-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 300;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .modal-backdrop.open { display: flex; }
+
+    .modal-sheet {
+      background: var(--white);
+      border-radius: 22px 22px 0 0;
+      width: 100%; max-width: 480px;
+      max-height: 92vh;
+      overflow-y: auto;
+      padding-bottom: 40px;
+      animation: slideUp 0.22s ease;
+    }
+    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+    .modal-handle {
+      width: 36px; height: 4px;
+      background: #ddd; border-radius: 2px;
+      margin: 12px auto 0;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px 10px;
+    }
+    .modal-title { font-size: 1rem; font-weight: 800; color: var(--ink); }
+    .modal-close {
+      background: #f0eeee; border: none; border-radius: 50%;
+      width: 30px; height: 30px;
+      font-size: 0.9rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--ink); font-family: inherit;
+    }
+
+    /* ADD FORM */
+    .photo-zone {
+      margin: 0 18px 14px;
+      height: 180px;
+      border-radius: 14px;
+      background: #f5f3f1;
+      border: 2px dashed #d0ccc8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      overflow: hidden;
+    }
+    .photo-zone img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .photo-zone-icon { font-size: 2rem; }
+    .photo-zone-label { font-size: 0.75rem; color: var(--stone); font-weight: 600; margin-top: 8px; }
+
+    #photoInput { display: none; }
+
+    .form-row { padding: 0 18px; margin-bottom: 12px; }
+    .form-label {
+      font-size: 0.62rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      color: var(--stone); margin-bottom: 6px;
+    }
+    .form-input {
+      width: 100%; background: #f5f3f1;
+      border: none; border-radius: 10px;
+      padding: 11px 13px;
+      font-size: 0.88rem; color: var(--ink);
+      font-family: inherit; outline: none; resize: none;
+    }
+    .form-input:focus { background: #ece8e4; }
+
+    /* type pills in add form */
+    .type-pill-row {
+      display: flex; gap: 7px; flex-wrap: wrap;
+      padding: 0 18px; margin-bottom: 14px;
+    }
+    .type-pill {
+      background: #f5f3f1;
+      border: none; border-radius: 20px;
+      padding: 6px 13px;
+      font-size: 0.7rem; font-weight: 600;
+      color: var(--ink); cursor: pointer;
+      font-family: inherit;
+      transition: background 0.12s;
+    }
+    .type-pill.selected { background: var(--ink); color: white; }
+
+    /* color swatches in add form */
+    .add-swatches {
+      display: flex; gap: 8px;
+      flex-wrap: wrap;
+      padding: 0 18px; margin-bottom: 14px;
+    }
+    .swatch {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 2.5px solid transparent;
+      cursor: pointer;
+      transition: transform 0.12s;
+    }
+    .swatch.selected { border-color: var(--ink); transform: scale(1.15); }
+
+    .save-btn {
+      margin: 8px 18px 0;
+      width: calc(100% - 36px);
+      padding: 14px;
+      background: var(--ink);
+      color: white; border: none;
+      border-radius: 12px;
+      font-size: 0.92rem; font-weight: 700;
+      cursor: pointer; font-family: inherit;
+    }
+
+    /* DETAIL MODAL */
+    .detail-photo {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      display: block;
+    }
+    .detail-no-photo {
+      width: 100%; aspect-ratio: 1/1;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem; background: #f0eeec;
+    }
+    .detail-body { padding: 16px 18px 0; }
+    .detail-name { font-size: 1.2rem; font-weight: 800; color: var(--ink); }
+    .detail-meta {
+      font-size: 0.75rem; color: var(--stone);
+      margin-top: 4px; display: flex; align-items: center; gap: 6px;
+    }
+    .detail-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .detail-notes { font-size: 0.8rem; color: var(--ink); opacity: 0.6; margin-top: 10px; line-height: 1.5; }
+    .delete-btn {
+      margin: 18px 0 0; width: 100%;
+      padding: 13px; background: #fde8e4; color: #c03020;
+      border: none; border-radius: 12px;
+      font-size: 0.86rem; font-weight: 700;
+      cursor: pointer; font-family: inherit;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header" id="pageHeader">
+    <a class="back-btn" href="index.html">←</a>
+    <div>
+      <div class="header-title" id="catTitle"></div>
+      <div class="header-count" id="catCount"></div>
+    </div>
+  </div>
+
+  <div class="filter-bar">
+    <div class="filter-scroll" id="filterScroll"></div>
+  </div>
+
+  <!-- Type dropdown (fixed, positioned by JS) -->
+  <div class="type-drop" id="typeDrop"></div>
+
+  <!-- Color dropdown (fixed, positioned by JS) -->
+  <div class="color-drop" id="colorDrop">
+    <div class="color-drop-title">Filter by color</div>
+    <div class="color-drop-grid" id="colorDropGrid"></div>
+    <button class="color-drop-clear" id="colorClearBtn" onclick="clearColors()">Clear</button>
+  </div>
+
+  <div class="grid-wrap">
+    <div class="items-grid" id="itemsGrid"></div>
+  </div>
+
+  <button class="fab" onclick="openAdd()">+</button>
+
+  <!-- ADD MODAL -->
+  <div class="modal-backdrop" id="addModal" onclick="backdropClose(event,'addModal')">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-header">
+        <div>
+          <div style="font-size:0.62rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--stone);margin-bottom:2px" id="addModalCatTag"></div>
+          <div class="modal-title">Add Item</div>
+        </div>
+        <button class="modal-close" onclick="closeModal('addModal')">✕</button>
+      </div>
+
+      <div class="photo-zone" id="photoZone" onclick="document.getElementById('photoInput').click()">
+        <div class="photo-zone-icon">📷</div>
+        <div class="photo-zone-label">Tap to add a photo</div>
+      </div>
+      <input type="file" id="photoInput" accept="image/*" capture="environment" onchange="handlePhoto(this)">
+
+      <div class="form-row">
+        <div class="form-label">Name</div>
+        <input class="form-input" id="itemName" placeholder="e.g. White linen shirt" type="text">
+      </div>
+
+      <div class="form-row">
+        <div class="form-label">Brand (optional)</div>
+        <input class="form-input" id="itemBrand" placeholder="e.g. Zara, Mango, Vintage…" type="text">
+      </div>
+
+      <div id="garmentTypeSection" style="display:none">
+        <div class="form-row"><div class="form-label">Type</div></div>
+        <div class="type-pill-row" id="garmentTypePills"></div>
+      </div>
+
+      <div class="form-row"><div class="form-label">Occasion</div></div>
+      <div class="type-pill-row" id="typePills"></div>
+
+      <div class="form-row"><div class="form-label">Color</div></div>
+      <div class="add-swatches" id="addSwatches"></div>
+
+      <div class="form-row">
+        <div class="form-label">Notes (optional)</div>
+        <textarea class="form-input" id="itemNotes" placeholder="Size, where I got it, how I style it…" rows="2"></textarea>
+      </div>
+
+      <button class="save-btn" onclick="saveItem()">Save to Wardrobe</button>
+    </div>
+  </div>
+
+  <!-- DETAIL MODAL -->
+  <div class="modal-backdrop" id="detailModal" onclick="backdropClose(event,'detailModal')">
+    <div class="modal-sheet" id="detailSheet"></div>
+  </div>
+
+  <script>
+    const CATS = {
+      tops:       { label: 'Tops',       bg: 'linear-gradient(150deg, rgba(228,90,51,0.90) 0%, rgba(180,55,22,0.98) 100%)'  },
+      bottoms:    { label: 'Bottoms',    bg: 'linear-gradient(150deg, #1c1c1a 0%, #2a2a28 100%)'                             },
+      dresses:    { label: 'Dresses',    bg: 'linear-gradient(150deg, rgba(228,90,51,0.80) 0%, rgba(147,152,155,0.95) 100%)'},
+      jackets:    { label: 'Jackets',    bg: 'linear-gradient(150deg, #1c1c1a 0%, rgba(228,90,51,0.90) 100%)'               },
+      bags:       { label: 'Bags',       bg: 'linear-gradient(150deg, #6a6e72 0%, #4a4e52 100%)'                            },
+      shoes:      { label: 'Shoes',      bg: 'linear-gradient(150deg, #7a7e82 0%, #1c1c1a 100%)'                            },
+      activewear: { label: 'Activewear', bg: 'linear-gradient(150deg, rgba(228,90,51,0.92) 0%, rgba(180,55,22,0.98) 100%)' },
+      swimwear:   { label: 'Swimwear',   bg: 'linear-gradient(150deg, #8a8e92 0%, #5a5e62 100%)'                           },
+      sweaters:   { label: 'Sweaters',   bg: 'linear-gradient(150deg, #2a2a28 0%, rgba(228,90,51,0.85) 100%)'              },
+      hats:       { label: 'Hats',       bg: 'linear-gradient(150deg, #1c1c1a 0%, #3a3a38 100%)'                           },
+      jewelry:    { label: 'Jewelry',    bg: 'linear-gradient(150deg, #8a8e92 0%, #1c1c1a 100%)'                           },
+    };
+
+    const STYLE_FILTERS = ['Casual', 'Going Out', 'Work'];
+
+    const CAT_TYPE_FILTERS = {
+      tops: ['T-Shirt', 'Tank Top', 'Long Sleeve'],
+    };
+
+    const PALETTE = [
+      { name: 'black',  hex: '#1c1c1c', label: 'Black'  },
+      { name: 'white',  hex: '#f0f0f0', label: 'White'  },
+      { name: 'grey',   hex: '#9e9e9e', label: 'Grey'   },
+      { name: 'navy',   hex: '#1a2744', label: 'Navy'   },
+      { name: 'blue',   hex: '#4a7fcb', label: 'Blue'   },
+      { name: 'green',  hex: '#4a7d60', label: 'Green'  },
+      { name: 'olive',  hex: '#7a7c45', label: 'Olive'  },
+      { name: 'brown',  hex: '#8c6030', label: 'Brown'  },
+      { name: 'tan',    hex: '#c8a060', label: 'Tan'    },
+      { name: 'red',    hex: '#c03050', label: 'Red'    },
+      { name: 'pink',   hex: '#e07090', label: 'Pink'   },
+      { name: 'purple', hex: '#7a4a8a', label: 'Purple' },
+    ];
+
+    const params   = new URLSearchParams(location.search);
+    const catKey   = params.get('cat') || 'tops';
+    const cfg      = CATS[catKey] || CATS.tops;
+    const storeKey = 'wardrobe_' + catKey;
+
+    let items              = [];
+    let activeStyleFilter  = 'all';
+    let activeTypeFilter   = null;
+    let activeColors       = new Set();
+    let selectedType       = null;
+    let selectedGarmentType = null;
+    let selectedColor      = null;
+    let photoData          = null;
+
+    function init() {
+      document.getElementById('catTitle').textContent = cfg.label;
+      document.getElementById('pageHeader').style.background = cfg.bg;
+      document.getElementById('addModalCatTag').textContent = cfg.label;
+
+      try { items = JSON.parse(localStorage.getItem(storeKey)) || []; } catch(e) { items = []; }
+
+      buildFilterBar();
+      buildColorDrop();
+      buildAddSwatches();
+      buildTypePills();
+      buildGarmentTypeSection();
+      renderGrid();
+
+      // Close dropdowns when clicking outside
+      document.addEventListener('click', e => {
+        const colorDrop = document.getElementById('colorDrop');
+        const colorPill = document.getElementById('colorPillBtn');
+        if (colorDrop.classList.contains('open') && !colorDrop.contains(e.target) && e.target !== colorPill) {
+          colorDrop.classList.remove('open');
+        }
+        const typeDrop = document.getElementById('typeDrop');
+        const typePill = document.getElementById('typePillBtn');
+        if (typeDrop && typeDrop.classList.contains('open') && !typeDrop.contains(e.target) && e.target !== typePill) {
+          typeDrop.classList.remove('open');
+        }
+      });
+    }
+
+    function buildFilterBar() {
+      const scroll = document.getElementById('filterScroll');
+      scroll.innerHTML = '';
+
+      // All pill
+      const allBtn = document.createElement('button');
+      allBtn.className = 'pill active';
+      allBtn.textContent = 'All';
+      allBtn.onclick = () => setStyleFilter('all', allBtn);
+      scroll.appendChild(allBtn);
+
+      // Color pill
+      const colorWrap = document.createElement('div');
+      colorWrap.className = 'color-pill-wrap';
+      const colorBtn = document.createElement('button');
+      colorBtn.className = 'pill';
+      colorBtn.id = 'colorPillBtn';
+      colorBtn.textContent = 'Color ▾';
+      colorBtn.onclick = (e) => { e.stopPropagation(); toggleColorDrop(colorBtn); };
+      colorWrap.appendChild(colorBtn);
+      scroll.appendChild(colorWrap);
+
+      // Type dropdown pill (category-specific)
+      if (CAT_TYPE_FILTERS[catKey]) {
+        const typeWrap = document.createElement('div');
+        typeWrap.className = 'color-pill-wrap';
+        const typeBtn = document.createElement('button');
+        typeBtn.className = 'pill';
+        typeBtn.id = 'typePillBtn';
+        typeBtn.textContent = 'Type ▾';
+        typeBtn.onclick = (e) => { e.stopPropagation(); toggleTypeDrop(typeBtn); };
+        typeWrap.appendChild(typeBtn);
+        scroll.appendChild(typeWrap);
+        buildTypeDrop(CAT_TYPE_FILTERS[catKey]);
+      }
+
+      // Universal style pills
+      STYLE_FILTERS.forEach(f => {
+        const btn = document.createElement('button');
+        btn.className = 'pill';
+        btn.textContent = f;
+        btn.onclick = () => setStyleFilter(f, btn);
+        scroll.appendChild(btn);
+      });
+    }
+
+    // Colors that need a subtle ring to be visible on white backgrounds
+    const LIGHT_COLORS = new Set(['white', 'tan', 'pink']);
+
+    function swatchShadow(name) {
+      return LIGHT_COLORS.has(name) ? 'inset 0 0 0 1.5px rgba(0,0,0,0.18)' : 'none';
+    }
+
+    function buildColorDrop() {
+      const grid = document.getElementById('colorDropGrid');
+      grid.innerHTML = '';
+      PALETTE.forEach(c => {
+        const sw = document.createElement('div');
+        sw.className = 'c-swatch';
+        sw.style.background = c.hex;
+        sw.style.boxShadow = swatchShadow(c.name);
+        sw.title = c.label;
+        sw.dataset.name = c.name;
+        sw.onclick = (e) => { e.stopPropagation(); toggleColorFilter(c.name, sw); };
+        grid.appendChild(sw);
+      });
+    }
+
+    function buildAddSwatches() {
+      const row = document.getElementById('addSwatches');
+      row.innerHTML = '';
+      PALETTE.forEach(c => {
+        const el = document.createElement('div');
+        el.className = 'swatch';
+        el.style.background = c.hex;
+        el.style.boxShadow = swatchShadow(c.name);
+        el.title = c.label;
+        el.onclick = () => pickAddColor(c.name, el);
+        row.appendChild(el);
+      });
+    }
+
+    function buildTypePills() {
+      const row = document.getElementById('typePills');
+      row.innerHTML = '';
+      STYLE_FILTERS.forEach(f => {
+        const btn = document.createElement('button');
+        btn.className = 'type-pill';
+        btn.textContent = f;
+        btn.onclick = () => pickType(f, btn);
+        row.appendChild(btn);
+      });
+    }
+
+    function buildGarmentTypeSection() {
+      const types = CAT_TYPE_FILTERS[catKey];
+      if (!types) return;
+      document.getElementById('garmentTypeSection').style.display = '';
+      const row = document.getElementById('garmentTypePills');
+      row.innerHTML = '';
+      types.forEach(t => {
+        const btn = document.createElement('button');
+        btn.className = 'type-pill';
+        btn.textContent = t;
+        btn.onclick = () => pickGarmentType(t, btn);
+        row.appendChild(btn);
+      });
+    }
+
+    function buildTypeDrop(types) {
+      const drop = document.getElementById('typeDrop');
+      drop.innerHTML = '';
+      types.forEach(t => {
+        const btn = document.createElement('button');
+        btn.className = 'type-drop-option';
+        btn.textContent = t;
+        btn.onclick = (e) => { e.stopPropagation(); selectTypeFilter(t, btn); };
+        drop.appendChild(btn);
+      });
+    }
+
+    function toggleTypeDrop(btn) {
+      const drop = document.getElementById('typeDrop');
+      // close color drop
+      document.getElementById('colorDrop').classList.remove('open');
+      if (drop.classList.contains('open')) { drop.classList.remove('open'); return; }
+      const rect = btn.getBoundingClientRect();
+      drop.style.top  = (rect.bottom + 6) + 'px';
+      drop.style.left = Math.min(rect.left, window.innerWidth - 176) + 'px';
+      drop.classList.add('open');
+    }
+
+    function selectTypeFilter(type, el) {
+      const isDeselect = activeTypeFilter === type;
+      activeTypeFilter = isDeselect ? null : type;
+      document.querySelectorAll('.type-drop-option').forEach(b => b.classList.remove('selected'));
+      const typeBtn = document.getElementById('typePillBtn');
+      if (activeTypeFilter) {
+        el.classList.add('selected');
+        typeBtn.classList.add('active');
+        typeBtn.textContent = type + ' ▾';
+      } else {
+        typeBtn.classList.remove('active');
+        typeBtn.textContent = 'Type ▾';
+      }
+      document.getElementById('typeDrop').classList.remove('open');
+      renderGrid();
+    }
+
+    function persist() {
+      localStorage.setItem(storeKey, JSON.stringify(items));
+      // update aggregate counts
+      const ALL = ['tops','bottoms','dresses','jackets','bags','shoes','activewear','swimwear','sweaters','hats','jewelry'];
+      const counts = {};
+      ALL.forEach(k => {
+        try { counts[k] = (JSON.parse(localStorage.getItem('wardrobe_' + k)) || []).length; } catch(e) { counts[k] = 0; }
+      });
+      localStorage.setItem('wardrobe_counts', JSON.stringify(counts));
+    }
+
+    function renderGrid() {
+      const grid = document.getElementById('itemsGrid');
+      const count = items.length;
+      document.getElementById('catCount').textContent = count + ' item' + (count !== 1 ? 's' : '');
+
+      const filtered = items.filter(item => {
+        const styleOk = activeStyleFilter === 'all' || item.style === activeStyleFilter;
+        const typeOk  = !activeTypeFilter || item.garmentType === activeTypeFilter;
+        const colorOk = activeColors.size === 0 || activeColors.has(item.color);
+        return styleOk && typeOk && colorOk;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">🗂</div>
+            <div class="empty-title">${items.length === 0 ? 'Nothing here yet' : 'No items match'}</div>
+            <div class="empty-sub">${items.length === 0 ? 'Tap + to add your first item' : 'Try a different filter'}</div>
+          </div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(item => {
+        const colorHex = PALETTE.find(c => c.name === item.color)?.hex || '#c8c4c0';
+        const sub = [item.style, item.brand].filter(Boolean).join(' · ');
+        return `
+          <div class="item-card" onclick="openDetail('${item.id}')">
+            ${item.photo
+              ? `<img src="${item.photo}" alt="${esc(item.name)}" loading="lazy">`
+              : `<div class="item-card-placeholder" style="background:${colorHex}">👗</div>`}
+            <div class="item-card-overlay">
+              <div class="item-card-name">${esc(item.name)}</div>
+              ${sub ? `<div class="item-card-sub">${esc(sub)}</div>` : ''}
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    function setStyleFilter(f, el) {
+      activeStyleFilter = f;
+      document.querySelectorAll('.filter-scroll .pill:not(#colorPillBtn)').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+      renderGrid();
+    }
+
+    function toggleColorDrop(btn) {
+      const drop = document.getElementById('colorDrop');
+      if (drop.classList.contains('open')) {
+        drop.classList.remove('open');
+        return;
+      }
+      const rect = btn.getBoundingClientRect();
+      drop.style.top  = (rect.bottom + 6) + 'px';
+      drop.style.left = Math.min(rect.left, window.innerWidth - 248) + 'px';
+      drop.classList.add('open');
+    }
+
+    function toggleColorFilter(name, el) {
+      if (activeColors.has(name)) {
+        activeColors.delete(name);
+        el.classList.remove('selected');
+      } else {
+        activeColors.add(name);
+        el.classList.add('selected');
+      }
+      const colorBtn = document.getElementById('colorPillBtn');
+      colorBtn.classList.toggle('active', activeColors.size > 0);
+      if (activeColors.size > 0) {
+        colorBtn.textContent = `Color (${activeColors.size}) ▾`;
+      } else {
+        colorBtn.textContent = 'Colour ▾';
+      }
+      renderGrid();
+    }
+
+    function clearColors() {
+      activeColors.clear();
+      document.querySelectorAll('.c-swatch').forEach(s => s.classList.remove('selected'));
+      const colorBtn = document.getElementById('colorPillBtn');
+      colorBtn.classList.remove('active');
+      colorBtn.textContent = 'Color ▾';
+      document.getElementById('colorDrop').classList.remove('open');
+      renderGrid();
+    }
+
+    /* ── ADD ITEM ── */
+    function openAdd() {
+      photoData = null; selectedType = null; selectedGarmentType = null; selectedColor = null;
+      document.getElementById('itemName').value   = '';
+      document.getElementById('itemBrand').value  = '';
+      document.getElementById('itemNotes').value  = '';
+      document.getElementById('photoInput').value = '';
+      document.getElementById('photoZone').innerHTML =
+        '<div class="photo-zone-icon">📷</div><div class="photo-zone-label">Tap to add a photo</div>';
+      document.querySelectorAll('.type-pill').forEach(p => p.classList.remove('selected'));
+      document.querySelectorAll('.swatch').forEach(s => s.classList.remove('selected'));
+      document.getElementById('addModal').classList.add('open');
+    }
+
+    function handlePhoto(input) {
+      const file = input.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        photoData = e.target.result;
+        const zone = document.getElementById('photoZone');
+        zone.innerHTML = '';
+        const img = document.createElement('img');
+        img.src = photoData;
+        zone.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function pickType(name, el) {
+      selectedType = selectedType === name ? null : name;
+      document.querySelectorAll('#typePills .type-pill').forEach(p => p.classList.remove('selected'));
+      if (selectedType) el.classList.add('selected');
+    }
+
+    function pickGarmentType(name, el) {
+      selectedGarmentType = selectedGarmentType === name ? null : name;
+      document.querySelectorAll('#garmentTypePills .type-pill').forEach(p => p.classList.remove('selected'));
+      if (selectedGarmentType) el.classList.add('selected');
+    }
+
+    function pickAddColor(name, el) {
+      selectedColor = name;
+      document.querySelectorAll('.swatch').forEach(s => s.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+
+    function saveItem() {
+      const name = document.getElementById('itemName').value.trim();
+      if (!name) {
+        const inp = document.getElementById('itemName');
+        inp.focus();
+        inp.style.outline = '2px solid ' + '#e45a33';
+        setTimeout(() => inp.style.outline = '', 1500);
+        return;
+      }
+      items.unshift({
+        id:          Date.now().toString(),
+        name,
+        brand:       document.getElementById('itemBrand').value.trim(),
+        garmentType: selectedGarmentType,
+        style:       selectedType,
+        color:       selectedColor,
+        notes:       document.getElementById('itemNotes').value.trim(),
+        photo:       photoData,
+        addedAt:     new Date().toISOString(),
+      });
+      persist();
+      closeModal('addModal');
+      renderGrid();
+    }
+
+    /* ── DETAIL ── */
+    function openDetail(id) {
+      const item = items.find(i => i.id === id);
+      if (!item) return;
+      const colorHex = PALETTE.find(c => c.name === item.color)?.hex;
+      const sub = [item.garmentType, item.style, item.brand].filter(Boolean).join(' · ');
+      const added = item.addedAt
+        ? new Date(item.addedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+        : '';
+      document.getElementById('detailSheet').innerHTML = `
+        <div class="modal-handle"></div>
+        <div class="modal-header">
+          <div class="modal-title">${esc(item.name)}</div>
+          <button class="modal-close" onclick="closeModal('detailModal')">✕</button>
+        </div>
+        ${item.photo
+          ? `<img class="detail-photo" src="${item.photo}" alt="${esc(item.name)}">`
+          : `<div class="detail-no-photo">👗</div>`}
+        <div class="detail-body">
+          <div class="detail-name">${esc(item.name)}</div>
+          <div class="detail-meta">
+            ${colorHex ? `<span class="detail-dot" style="background:${colorHex}"></span>` : ''}
+            <span>${[sub, added ? 'Added ' + added : ''].filter(Boolean).join(' · ')}</span>
+          </div>
+          ${item.notes ? `<div class="detail-notes">${esc(item.notes)}</div>` : ''}
+          <button class="delete-btn" onclick="deleteItem('${esc(id)}')">Delete Item</button>
+        </div>`;
+      document.getElementById('detailModal').classList.add('open');
+    }
+
+    function deleteItem(id) {
+      if (!confirm('Remove this item?')) return;
+      items = items.filter(i => i.id !== id);
+      persist();
+      closeModal('detailModal');
+      renderGrid();
+    }
+
+    function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+    function backdropClose(e, id) { if (e.target === document.getElementById(id)) closeModal(id); }
+    function cap(s) { return s ? s[0].toUpperCase() + s.slice(1) : ''; }
+    function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+    init();
+  </script>
+</body>
+</html>
