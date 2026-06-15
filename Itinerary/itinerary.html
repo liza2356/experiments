@@ -104,11 +104,32 @@
     /* ── STATS PILLS ── */
     .stats {
       display: flex;
-      flex-wrap: nowrap;
+      flex-wrap: wrap;
       justify-content: center;
       gap: 6px;
       background: var(--navy);
       padding: 12px 10px 16px;
+    }
+
+    .stat-item-cost {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 6px 18px;
+      border-radius: 999px;
+      background: rgba(201,162,39,0.2);
+      border: 1px solid rgba(201,162,39,0.45);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    .stat-item-cost .divider {
+      width: 1px;
+      height: 14px;
+      background: rgba(201,162,39,0.4);
     }
 
     .stat-item {
@@ -509,7 +530,12 @@
   <div class="stat-item"><span class="stat-value">18</span><span class="stat-label">Days</span></div>
   <div class="stat-item"><span class="stat-value">4</span><span class="stat-label">Countries</span></div>
   <div class="stat-item"><span class="stat-value">7</span><span class="stat-label">Flights</span></div>
-  <div class="stat-item"><span class="stat-value">$1,631</span><span class="stat-label">Cost</span></div>
+  <div class="stat-item"><span class="stat-value">$2,474</span><span class="stat-label">Cost</span></div>
+  <div style="width:100%;display:flex;justify-content:center;">
+    <div class="stat-item-cost">
+      💰 <span>$2,474 total</span><div class="divider"></div><span>$1,237 per person</span>
+    </div>
+  </div>
 </div>
 
 <!-- TABS -->
@@ -802,6 +828,17 @@
         </div>
       </div>
       <div class="activity-card">
+        <div class="act-header" style="background:#f0ebe8;color:#5c3d2e;">
+          <span>🏨 HOTEL · Jul 16–18</span>
+          <span class="price-badge" style="background:rgba(0,0,0,0.12);">€555.66 · ~$606</span>
+        </div>
+        <div class="act-body" style="padding:8px 13px;">
+          <div style="font-size:0.82rem;font-weight:800;color:var(--navy);">Play Hotel Ibiza</div>
+          <div style="font-size:0.7rem;color:var(--text-muted);margin-top:2px;">Double Twin · 2 guests · 2 nights</div>
+          <div style="font-size:0.68rem;color:var(--text-muted);margin-top:3px;">Confirmation: <b style="color:var(--text);">14454</b> &nbsp;·&nbsp; Elizabeth Intskirveli</div>
+        </div>
+      </div>
+      <div class="activity-card">
         <div class="act-header" style="background:#e8f4f8;color:#1a3a4a;">
           <span>🏖️ EXPLORE</span>
         </div>
@@ -821,7 +858,7 @@
       <div class="activity-card type-dj">
         <div class="act-header">
           <span>🎵 DJ SET / EVENT</span>
-          <span class="price-badge">€50 · ~$54</span>
+          <span class="price-badge">€120 · ~$131 &nbsp;(€60pp · ~$65pp)</span>
         </div>
         <div class="act-body" style="display:flex;gap:10px;align-items:flex-start;">
           <img src="fisher.avif" alt="Fisher" style="width:56px;height:56px;border-radius:8px;object-fit:cover;flex-shrink:0;">
@@ -864,7 +901,7 @@
       <div class="activity-card type-dj">
         <div class="act-header">
           <span>🎵 DJ SET / EVENT</span>
-          <span class="price-badge">€135 · ~$146</span>
+          <span class="price-badge">€280 · ~$305 &nbsp;(€140pp · ~$153pp)</span>
         </div>
         <div class="act-body" style="display:flex;gap:10px;align-items:flex-start;">
           <img src="calvinharris.png" alt="Calvin Harris" style="width:56px;height:56px;border-radius:8px;object-fit:cover;flex-shrink:0;">
