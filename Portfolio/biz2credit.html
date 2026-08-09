@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transforming & Automating a Fintech Customer Dashboard — Liza Intskirveli</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Funnel+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Nunito+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="case-study.css">
+</head>
+<body>
+
+  <site-nav></site-nav>
+
+  <main>
+
+    <section class="cs-hero">
+      <div class="container">
+        <h1 class="cs-title">Transforming & Automating a Fintech Customer Dashboard</h1>
+        <p class="cs-meta">Biz2Credit 2024</p>
+        <p class="cs-intro">Dashboards play a critical role in providing users with essential data and insights, enabling smooth interactions with application processes. However, Biz2Credit, a leading digital lender for small businesses, faced a significant challenge—its customer dashboard was neither functional nor intuitive. As a result, users struggled with status updates, task navigation, and document submission. So, I redesigned it.</p>
+      </div>
+    </section>
+
+    <section class="cs-full-image">
+      <div class="container">
+        <div class="cs-image-wrapper">
+          <img class="cs-image-placeholder" src="assets/biz2credit/b2cdash.jpg" alt="Biz2Credit dashboard">
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <site-footer></site-footer>
+  <script src="components.js"></script>
+  <script>
+    if (window.matchMedia('(hover: hover)').matches) {
+      const cur = document.createElement('div');
+      cur.className = 'custom-cursor';
+      cur.innerHTML = '<span class="cursor-label">see more</span>';
+      document.body.appendChild(cur);
+      document.addEventListener('mousemove', (e) => {
+        cur.style.left = e.clientX + 'px';
+        cur.style.top  = e.clientY + 'px';
+      });
+      document.addEventListener('mouseover', (e) => {
+        const onProject = !!e.target.closest('.project-card');
+        const onLink    = !!e.target.closest('a, button');
+        cur.classList.toggle('is-project',  onProject);
+        cur.classList.toggle('is-hovering', onLink && !onProject);
+      });
+    }
+  </script>
+
+</body>
+</html>

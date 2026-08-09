@@ -1,0 +1,52 @@
+/* ── Case study shared styles ────────────────────────────── */
+
+.cs-hero {
+  padding: 80px 0 64px;
+}
+
+.cs-title {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 32px;
+}
+
+.cs-meta {
+  font-family: var(--font-display);
+  font-size: 1.025rem;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+  margin-bottom: 32px;
+  margin-top: -4px;
+}
+
+.cs-full-image {
+  padding-bottom: clamp(80px, 12vw, 140px);
+}
+
+.cs-image-wrapper {
+  background-color: #25A86A;
+  border-radius: 4px;
+  padding: 48px 32px 0;
+  overflow: hidden;
+  max-height: 600px;
+}
+
+.cs-image-placeholder {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px 8px 0 0;
+}
+
+.cs-intro {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--text);
+  max-width: none;
+}

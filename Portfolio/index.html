@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liza Intskirveli — Product &amp; Experience Designer</title>
+  <meta name="description" content="Product and experience designer based in NYC, crafting intuitive, user-centered, data-informed design.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Funnel+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <site-nav></site-nav>
+
+  <main>
+
+    <!-- ── Hero ── -->
+    <section class="hero">
+<img class="hero-illustration" src="assets/home/laptop.svg" alt="Liza illustration">
+      <div class="hero-name-wrap">
+        <h1 class="hero-headline">liza intskirveli</h1>
+        <p class="hero-body">i design intuitive, user-centered, &amp; data-driven experiences<br>that turn insights into impactful, seamless experiences.</p>
+      </div>
+    </section>
+
+    <!-- ── Projects ── -->
+    <section class="projects" id="projects">
+      <div class="container">
+<div class="project-grid">
+
+          <a class="project-card" href="#">
+            <div class="card-cover" style="background-color:#1D6AE5;">
+              <div class="card-image-bg" style="background-image:url('assets/bny/bnydashboard.jpg');"></div>
+              <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+              <div class="card-overlay">
+                <h2 class="card-title">Client Onboarding for Global Banking</h2>
+                <p class="card-category">BNY 2025/26</p>
+              </div>
+            </div>
+          </a>
+
+          <a class="project-card" href="biz2credit.html">
+            <div class="card-cover" style="background-color: #25A86A;">
+              <img class="card-mockup-back" src="assets/biz2credit/deviceframe.png" alt="">
+              <img class="card-mockup-front" src="assets/biz2credit/phoneb2c.png" alt="">
+              <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+              <div class="card-overlay">
+                <h2 class="card-title">Transforming & Automating a Fintech Customer Dashboard</h2>
+                <p class="card-category">Biz2Credit 2024</p>
+              </div>
+            </div>
+          </a>
+
+          <a class="project-card" href="#">
+            <div class="card-cover" style="background-color: #E8470A;">
+              <img class="card-mockup-back card-mockup-back--yodlee" src="assets/yodlee/yodleedesktop.jpg" alt="">
+              <img class="card-mockup-front card-mockup-front--yodlee" src="assets/yodlee/yodleephone.png" alt="">
+              <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+              <div class="card-overlay">
+                <h2 class="card-title">Seamless Bank Connection with Mastercard's Finicity API</h2>
+                <p class="card-category">Biz2Credit, 2023/24</p>
+              </div>
+            </div>
+          </a>
+
+          <a class="project-card" href="#">
+            <div class="card-cover" style="background-color: #4F46E5;">
+              <div class="giga-pair">
+                <img class="card-mockup-giga card-mockup-giga--back" src="assets/giga/giga2.png" alt="">
+                <img class="card-mockup-giga card-mockup-giga--front" src="assets/giga/giga1.png" alt="">
+              </div>
+              <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+              <div class="card-overlay">
+                <h2 class="card-title">Giga: A Freelancing Platform for Creative Professionals</h2>
+                <p class="card-category">Freelance Capstone, 2021</p>
+              </div>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+<!-- ── About strip ── -->
+    <section class="about-strip">
+      <div class="container">
+        <div class="about-grid">
+          <img class="about-photo" src="assets/home/head.png" alt="Liza Intskirveli">
+          <div class="about-col">
+            <p class="about-label">why work with me...</p>
+            <p class="about-text">i believe the best designs and experiences come from true collaboration. when we work together, you're not just getting a designer, you're getting a strategic partner who takes time to understand your business, your customers, and your goals. i aim to deliver products that drive measurable impact and empower ai tools.</p>
+            <a href="resume.pdf" class="about-resume-btn" target="_blank" rel="noopener">download resume</a>
+          </div>
+          <div class="about-col">
+            <p class="about-label">when i'm not designing...</p>
+            <p class="about-text">you'll find me doodling, filling up rolls of film on my vintage camera, traveling, or exploring new tech from my couch with my cat. always looking for fresh inspiration and to learn new skills.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <site-footer></site-footer>
+  <script src="components.js"></script>
+  <script>
+    (function () {
+      function fitName() {
+        const el = document.querySelector('.hero-headline');
+        if (!el) return;
+        const parent = el.parentElement;
+        const cs = getComputedStyle(parent);
+        const available = parent.getBoundingClientRect().width
+          - parseFloat(cs.paddingLeft)
+          - parseFloat(cs.paddingRight);
+        if (available <= 0) { requestAnimationFrame(fitName); return; }
+
+        const probe = document.createElement('span');
+        probe.style.cssText =
+          'position:absolute;top:-9999px;left:-9999px;white-space:nowrap;' +
+          'font-family:"Funnel Sans",sans-serif;font-weight:800;' +
+          'letter-spacing:-0.03em;font-size:100px;';
+        probe.textContent = el.textContent.trim();
+        document.body.appendChild(probe);
+        const w = probe.getBoundingClientRect().width;
+        document.body.removeChild(probe);
+
+        if (w <= 0) { requestAnimationFrame(fitName); return; }
+        el.style.fontSize = (available / w * 100).toFixed(2) + 'px';
+      }
+
+      function typewriter(el, text, speed) {
+        el.textContent = '';
+        el.classList.add('typing');
+        let i = 0;
+        const tick = setInterval(() => {
+          el.textContent += text[i++];
+          if (i >= text.length) {
+            clearInterval(tick);
+            setTimeout(() => el.classList.remove('typing'), 1800);
+          }
+        }, speed);
+      }
+
+      // Wait for Funnel Sans specifically before measuring
+      document.fonts.load("800 100px 'Funnel Sans'").then(() => {
+        fitName();
+        const el = document.querySelector('.hero-headline');
+        if (el) {
+          const text = el.textContent.trim();
+          setTimeout(() => typewriter(el, text, 75), 120);
+        }
+      }).catch(() => { fitName(); });
+      window.addEventListener('resize', fitName);
+    })();
+
+    // Custom cursor — only on devices that support hover
+    if (window.matchMedia('(hover: hover)').matches) {
+      const cur = document.createElement('div');
+      cur.className = 'custom-cursor';
+      cur.innerHTML = '<span class="cursor-label">see more</span>';
+      document.body.appendChild(cur);
+
+      document.addEventListener('mousemove', (e) => {
+        cur.style.left = e.clientX + 'px';
+        cur.style.top  = e.clientY + 'px';
+      });
+
+      document.addEventListener('mouseover', (e) => {
+        const onProject = !!e.target.closest('.project-card');
+        const onLink    = !!e.target.closest('a, button');
+        cur.classList.toggle('is-project',  onProject);
+        cur.classList.toggle('is-hovering', onLink && !onProject);
+      });
+    }
+  </script>
+
+</body>
+</html>
