@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Onboarding for Global Banking — Liza Intskirveli</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Funnel+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Libre+Caslon+Condensed:wght@400;600&family=Nunito+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="case-study.css">
+  <style>:root { --cs-accent: #1D6AE5; }</style>
+</head>
+<body>
+
+  <site-nav></site-nav>
+
+  <div class="cs-bg-title-wrap" aria-hidden="true">
+    <div class="cs-bg-title-inner">
+      <span class="cs-bg-title">Client Onboarding for Global Banking&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      <span class="cs-bg-title">Client Onboarding for Global Banking&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    </div>
+  </div>
+
+  <main>
+
+    <section class="cs-hero">
+        <div class="cs-hero-layout">
+
+          <div class="cs-hero-text">
+            <h1 class="cs-title">Client Onboarding for Global Banking</h1>
+            <p class="cs-meta">BNY 2025/26</p>
+            <p class="cs-role-label">ABOUT</p>
+            <p class="cs-intro">Edit this description.</p>
+
+            <div class="cs-role-row">
+              <div class="cs-role-block">
+                <p class="cs-role-label">MY ROLE</p>
+                <p class="cs-role-value">Edit role</p>
+              </div>
+              <div class="cs-role-block">
+                <p class="cs-role-label">TOOLS</p>
+                <p class="cs-role-value">Figma<br>Figjam</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="cs-hero-image">
+            <div class="cs-hero-placeholder">
+              <img src="assets/bny/bnydashboard.jpg" alt="BNY dashboard" class="cs-hero-placeholder-img">
+            </div>
+          </div>
+
+        </div>
+    </section>
+
+    <section class="cs-section">
+      <div class="container">
+        <p class="cs-role-label">PROBLEM STATEMENT</p>
+        <p class="cs-section-body">Edit problem statement.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <site-footer></site-footer>
+  <script src="components.js"></script>
+  <script>
+    (function () {
+      const inner = document.querySelector('.cs-bg-title-inner');
+      const copy  = document.querySelector('.cs-bg-title');
+      if (!inner || !copy) return;
+      function updateBgTitle() {
+        const scrollY    = window.scrollY;
+        const singleW    = copy.offsetWidth;
+        const offset     = (scrollY * 1.5) % singleW;
+        const opacity    = Math.max(0, 1 - scrollY / 200);
+        inner.style.transform = `translateX(-${offset}px)`;
+        inner.style.opacity   = opacity;
+      }
+      window.addEventListener('scroll', updateBgTitle, { passive: true });
+      updateBgTitle();
+    })();
+
+    if (window.matchMedia('(hover: hover)').matches) {
+      const cur = document.createElement('div');
+      cur.className = 'custom-cursor';
+      cur.innerHTML = '<span class="cursor-label">see more</span>';
+      document.body.appendChild(cur);
+      document.addEventListener('mousemove', (e) => {
+        cur.style.left = e.clientX + 'px';
+        cur.style.top  = e.clientY + 'px';
+      });
+      document.addEventListener('mouseover', (e) => {
+        const onProject = !!e.target.closest('.project-card');
+        const onLink    = !!e.target.closest('a, button');
+        cur.classList.toggle('is-project',  onProject);
+        cur.classList.toggle('is-hovering', onLink && !onProject);
+      });
+    }
+  </script>
+
+</body>
+</html>

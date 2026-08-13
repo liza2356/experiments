@@ -6,29 +6,114 @@
   <title>Transforming & Automating a Fintech Customer Dashboard — Liza Intskirveli</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Funnel+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Nunito+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Funnel+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;600;700&family=Libre+Caslon+Condensed:wght@400;600&family=Nunito+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="case-study.css">
+  <style>:root { --cs-accent: #25A86A; }</style>
 </head>
 <body>
 
   <site-nav></site-nav>
 
+  <div class="cs-bg-title-wrap" aria-hidden="true">
+    <div class="cs-bg-title-inner">
+      <span class="cs-bg-title">Transforming &amp; Automating a Fintech Customer Dashboard&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      <span class="cs-bg-title">Transforming &amp; Automating a Fintech Customer Dashboard&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    </div>
+  </div>
+
   <main>
 
     <section class="cs-hero">
+        <div class="cs-hero-layout">
+
+          <div class="cs-hero-text">
+            <h1 class="cs-title">Transforming & Automating a Fintech Customer Dashboard</h1>
+            <p class="cs-meta">Biz2Credit 2024</p>
+            <p class="cs-role-label">ABOUT</p>
+            <p class="cs-intro">Dashboards play a critical role in providing users with essential data and insights, enabling smooth interactions with application processes. However, Biz2Credit, a leading digital lender for small businesses, faced a significant challenge—its customer dashboard was neither functional nor intuitive. As a result, users struggled with status updates, task navigation, and document submission. So, I redesigned it.</p>
+
+            <div class="cs-role-row">
+              <div class="cs-role-block">
+                <p class="cs-role-label">MY ROLE</p>
+                <p class="cs-role-value">Lead Product Designer, UX Research, Architecture Planning, Wireframing</p>
+              </div>
+              <div class="cs-role-block">
+                <p class="cs-role-label">TOOLS</p>
+                <p class="cs-role-value">Figma<br>Figjam</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="cs-hero-image">
+            <div class="cs-hero-placeholder">
+              <img src="assets/biz2credit/b2cdash.jpg" alt="Biz2Credit dashboard" class="cs-hero-placeholder-img">
+            </div>
+          </div>
+
+        </div>
+    </section>
+
+    <section class="cs-section">
       <div class="container">
-        <h1 class="cs-title">Transforming & Automating a Fintech Customer Dashboard</h1>
-        <p class="cs-meta">Biz2Credit 2024</p>
-        <p class="cs-intro">Dashboards play a critical role in providing users with essential data and insights, enabling smooth interactions with application processes. However, Biz2Credit, a leading digital lender for small businesses, faced a significant challenge—its customer dashboard was neither functional nor intuitive. As a result, users struggled with status updates, task navigation, and document submission. So, I redesigned it.</p>
+        <p class="cs-role-label">PROBLEM STATEMENT</p>
+        <p class="cs-section-body">Biz2Credit specializes in providing financing to small businesses, but the customer dashboard was a source of friction in the funding process. Specifically, the dashboard lacked clarity around application status, overwhelmed users with redundant calls-to-action (CTAs), and required manual intervention from customer support for document submission. The cluttered interface and lack of automation slowed down the funding process, creating a need for a comprehensive redesign to improve both navigation and speed.</p>
       </div>
     </section>
 
-    <section class="cs-full-image">
+    <section class="cs-section">
       <div class="container">
-        <div class="cs-image-wrapper">
-          <img class="cs-image-placeholder" src="assets/biz2credit/b2cdash.jpg" alt="Biz2Credit dashboard">
+        <p class="cs-role-label">RESEARCH</p>
+        <p class="cs-section-body">To better understand the user experience, we took a hands-on approach by completing funding applications ourselves. We then collected data on existing dashboard screens and identified the pain points specific to each funding product. We supplemented this research with customer interviews and user behavior analysis using Microsoft Clarity, heatmaps, and user session recordings. This data helped us pinpoint areas where users struggled and allowed us to focus on addressing key issues in the redesign.</p>
+      </div>
+    </section>
+
+    <section class="cs-section">
+      <div class="container">
+        <p class="cs-role-label">UX CHALLENGES</p>
+        <ul class="cs-list">
+          <li><strong>Application Status:</strong> The dashboard did not clearly convey whether the customer had tasks to complete or what steps they should take next.</li>
+          <li><strong>Overloaded CTAs:</strong> The excessive and redundant CTAs confused users and hindered their progress through the application.</li>
+          <li><strong>Hidden Tasks:</strong> Customers had difficulty finding the location for uploading required documents, creating unnecessary delays.</li>
+          <li><strong>Complicated Navigation:</strong> Stacked accordions and excessive clicks were needed to open folders and organize files, leading to frustration.</li>
+          <li><strong>Unnecessary Progress Bars:</strong> The dashboard included its own progress indicator, which conflicted with the application flow and created friction.</li>
+          <li><strong>Misalignment with Internal Teams:</strong> The customer's status did not align with internal teams, making it difficult to track progress and provide accurate updates.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="cs-section">
+      <div class="container">
+        <p class="cs-role-label">PLANNING</p>
+        <div class="cs-two-col">
+          <div class="cs-two-col-text">
+            <p class="cs-section-body">I mapped the customer journey and redesigned the dashboard statuses to make them more intuitive and easier to understand. By outlining what components make up the dashboard and rewriting the copy on each page, I was able to give users clearer, more actionable guidance. To ensure the new experience worked across different financial products, I reviewed hundreds of dashboard screens and built a scalable system that would be easier to maintain and expand over time. Working closely with my PM, our patience throughout the process helped us persevere and get the details right.</p>
+            <div class="cs-sticky-note">
+              <svg class="cs-sticky-paperclip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/>
+              </svg>
+              <p class="cs-sticky-note-title">Components that make up the Dashboard:</p>
+              <ol class="cs-sticky-note-list">
+                <li>Header and Main Navigation (logo, switch apps, new app, my account (settings, sign out))</li>
+                <li>Business Information (name, ID, status of application)</li>
+                <li>Offer Details (available after offer has been accepted)</li>
+                <li>Funding Specialist Details for contact</li>
+                <li>My Tasks, Document Upload component</li>
+                <li>Progress Bar of submitting docs?</li>
+              </ol>
+            </div>
+          </div>
+          <div class="cs-two-col-image">
+            <img src="assets/biz2credit/b2cplanning.webp" alt="Planning" class="cs-two-col-img" style="margin-top: 10px;">
+          </div>
         </div>
+      </div>
+    </section>
+
+    <section class="cs-section">
+      <div class="container">
+        <p class="cs-role-label">THE MVP</p>
+        <p class="cs-section-body">Given the scope of the full redesign, we first launched an MVP to test the most critical components. The MVP introduced a reusable document upload component, allowing users to upload underwriting documents through a simple activity page accessed via a unique URL. This MVP formed the foundation for the full dashboard redesign.</p>
       </div>
     </section>
 
@@ -37,6 +122,22 @@
   <site-footer></site-footer>
   <script src="components.js"></script>
   <script>
+    (function () {
+      const inner = document.querySelector('.cs-bg-title-inner');
+      const copy  = document.querySelector('.cs-bg-title');
+      if (!inner || !copy) return;
+      function updateBgTitle() {
+        const scrollY    = window.scrollY;
+        const singleW    = copy.offsetWidth;
+        const offset     = (scrollY * 1.5) % singleW;
+        const opacity    = Math.max(0, 1 - scrollY / 200);
+        inner.style.transform = `translateX(-${offset}px)`;
+        inner.style.opacity   = opacity;
+      }
+      window.addEventListener('scroll', updateBgTitle, { passive: true });
+      updateBgTitle();
+    })();
+
     if (window.matchMedia('(hover: hover)').matches) {
       const cur = document.createElement('div');
       cur.className = 'custom-cursor';
